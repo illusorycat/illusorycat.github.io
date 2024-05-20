@@ -6,12 +6,12 @@
   
   <title>茶舍</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="作为个人博客网站，使用 hexo 开源框架。 Markdown、Gallery、PicGo、Hexo、FFMPEG、Beyond-Compare、Dart">
+  <meta name="description" content="作为个人博客网站，使用 hexo 开源框架。 Markdown、Gallery、PicGo、Hexo、FFMPEG、Beyond-Compare、Dart、Flutter">
 <meta property="og:type" content="website">
 <meta property="og:title" content="茶舍">
 <meta property="og:url" content="https://illusorycat.github.io/index.html">
 <meta property="og:site_name" content="茶舍">
-<meta property="og:description" content="作为个人博客网站，使用 hexo 开源框架。 Markdown、Gallery、PicGo、Hexo、FFMPEG、Beyond-Compare、Dart">
+<meta property="og:description" content="作为个人博客网站，使用 hexo 开源框架。 Markdown、Gallery、PicGo、Hexo、FFMPEG、Beyond-Compare、Dart、Flutter">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="Illusory">
 <meta name="twitter:card" content="summary">
@@ -70,6 +70,94 @@
 
       <div class="outer">
         <section id="main">
+  
+    <article id="post-Start-with-Flutter-Ⅰ" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/05/20/Start-with-Flutter-%E2%85%A0/" class="article-date">
+  <time class="dt-published" datetime="2024-05-20T08:55:02.000Z" itemprop="datePublished">2024-05-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/05/20/Start-with-Flutter-%E2%85%A0/">Flutter 入门指引 Ⅰ</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><p><a href="#1">前言</a><br><a href="#2">开发环境搭建</a><br><a href="#3">后言</a></p>
+<h1 id="1">前言</h1>
+
+<p>本文基于掘金小册<a target="_blank" rel="noopener" href="https://juejin.cn/book/7212822723330834487">《Flutter 入门教程》</a>，是笔者学习了该小册后的记录。<br><br>该记录仅作为知识记录，用于帮助笔者在日后快速回忆 Flutter 的使用。<br><br>由于该小册内容较多，笔者在此将其输出为多篇文章。本文是第一篇，主要讲述 Flutter 开发环境的搭建，以及后续文章内容的概览。<br></p>
+<h1 id="2">开发环境搭建</h1>
+
+<p>笔者的环境为 macmini 主机，系统为 macOS 13.6.4 。开发环境搭建主要遵从了 Flutter 的<a target="_blank" rel="noopener" href="https://docs.flutter.dev/get-started/install">指南</a>。目前笔者使用的开发环境是 MacOS 下的 iOS 开发环境和 Android 环境，Flutter 版本为 stable 渠道的 3.19.6 。<br>本文默认使用的 sheel为 zsh 。<br></p>
+<h2 id="iOS-环境"><a href="#iOS-环境" class="headerlink" title="iOS 环境"></a>iOS 环境</h2><h4 id="开发工具"><a href="#开发工具" class="headerlink" title="开发工具"></a>开发工具</h4><p>下载并安装 Xcode 15 和 CocoaPods 1.13 。在安装 Xcode 时一般会同步安装 Git 2.27 或更高版本，如果没有请手动安装。<br><br>安装 Xcode 后最好打开并运行一个简单的程序，以使你安装相关的需要，如果真的有的话。<br><br>安装 CocoaPods 很简单，运行下述语句即可:<br></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gem install cocoapods</span><br></pre></td></tr></table></figure>
+<p>安装完成之后最好设置一下环境变量：<br></p>
+<ul>
+<li>打开 zsh 环境变量文件：  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi ~/.zshenv</span><br></pre></td></tr></table></figure></li>
+<li>在末尾添加下述语句：  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PATH=$HOME/.gem/bin:$PATH</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="文本编辑器"><a href="#文本编辑器" class="headerlink" title="文本编辑器"></a>文本编辑器</h4><p>笔者选用的是 VS Code 。<br><br>在 VS Code 中增加扩展 <strong>Flutter</strong> 。当你安装该扩展时，会默认帮你一起安装 <strong>Dart</strong> 扩展，如果没有请手动安装。<br></p>
+<h4 id="Flutter-SDK"><a href="#Flutter-SDK" class="headerlink" title="Flutter SDK"></a>Flutter SDK</h4><ol>
+<li>在 VS Code 中打开命令面板（Command + shift + P）</li>
+<li>输入 flutter ，选择 Flutter: New Project</li>
+</ol>
+<p>这时 VS Code 会提醒在本地找到 Flutter SDK ，你可以选择 <strong>Download SDK</strong> ，下载 SDK 到你想要保存到目录下。<br><br>下载完成时会提示你是否添加 Flutter SDK 到环境变量中，请最好选择是。<br><br>重启 VS Code 你就能看到 Flutter SDK 已经准备就绪。<br></p>
+<h5 id="配置-Xcode"><a href="#配置-Xcode" class="headerlink" title="配置 Xcode"></a>配置 Xcode</h5><p>签署 Xcode 许可协议：<br></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo xcodebuild -license</span><br></pre></td></tr></table></figure>
+<p>现在，你可以在 iOS 模拟器或真机上运行 Flutter 项目了。<br></p>
+<h2 id="安卓环境"><a href="#安卓环境" class="headerlink" title="安卓环境"></a>安卓环境</h2><p>安卓环境是在上述 iOS 环境搭建的基础上继续添加。<br></p>
+<h4 id="开发工具-1"><a href="#开发工具-1" class="headerlink" title="开发工具"></a>开发工具</h4><p>下载并安装 Android Studio。启动 Android Studio 并安装提示操作。<br><br>确保安装以下组件，如果在初始指引中没有安装的，可以后续在 Android Studio 中继续安装：<br></p>
+<ul>
+<li>Android SDK Platform, API 34.0.0</li>
+<li>Android SDK Command-line Tools</li>
+<li>Android SDK Build-Tools</li>
+<li>Android SDK Platform-Tools</li>
+<li>Android Emulator</li>
+</ul>
+<h4 id="配置-Android"><a href="#配置-Android" class="headerlink" title="配置 Android"></a>配置 Android</h4><p>运行以下指令启用签名许可证：<br></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flutter doctor --android-licenses</span><br></pre></td></tr></table></figure>
+<h2 id="故障排查"><a href="#故障排查" class="headerlink" title="故障排查"></a>故障排查</h2><p>在终端运行如下指令：<br></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flutter doctor</span><br></pre></td></tr></table></figure>
+<p>指令结果应该如下：<br><br><img src="https://raw.githubusercontent.com/illusorycat/MyPictureBase/main/image/202405201921882.png"></p>
+<h4 id="替换-maven-访问源"><a href="#替换-maven-访问源" class="headerlink" title="替换 maven 访问源"></a>替换 maven 访问源</h4><p>在国内访问 maven 总是很困难，所以最好是将 maven 的访问源换成国内镜像。<br></p>
+<ol>
+<li>打开 Flutter 的安装目录&#x2F;packages&#x2F;flutter_tools&#x2F;lib&#x2F;src&#x2F; 下的 http_host_validator.dart 文件。<br><br> <img src="https://raw.githubusercontent.com/illusorycat/MyPictureBase/main/image/202405201925547.png"></li>
+<li>将其中 maven 的访问源改为你喜欢的国内镜像源，笔者使用的是国内阿里云的源：<br><br> <img src="https://raw.githubusercontent.com/illusorycat/MyPictureBase/main/image/202405201927774.png"></li>
+<li>删除 flutter 安装目录&#x2F;bin&#x2F;cache 文件夹</li>
+<li>再次执行 flutter doctor</li>
+</ol>
+<p>事实上，除了 maven ，gradle 的访问也比较麻烦，但好在它只需要挂一下香港的网络节点一般都可以访问。<br></p>
+<h1 id="3">前言</h1>
+
+<p>对于开发环境的搭建就讲到这了，后面会直接开始 Flutter 项目实践，需要读者至少有 Dart 语言的基础，可以去<a href="https://illusorycat.github.io/2024/05/20/Dart-brief/">此处</a>了解。<br></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://illusorycat.github.io/2024/05/20/Start-with-Flutter-%E2%85%A0/" data-id="clweyy70w000acxqe9m67f1j5" data-title="Flutter 入门指引 Ⅰ" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BB%A3%E7%A0%81%E4%BA%BA%E7%94%9F/" rel="tag">代码人生</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
   
     <article id="post-Dart-brief" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
@@ -416,7 +504,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://illusorycat.github.io/2024/05/20/Dart-brief/" data-id="clwew9ayn0006lhqe9fqn0sam" data-title="Dart 简述" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://illusorycat.github.io/2024/05/20/Dart-brief/" data-id="clweyy70v0004cxqe5ffghi98" data-title="Dart 简述" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -488,7 +576,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://illusorycat.github.io/2024/05/20/Beyond-Compare-probation/" data-id="clwew9ayl0002lhqecuny6u0m" data-title="Beyond Compare 试用期" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://illusorycat.github.io/2024/05/20/Beyond-Compare-probation/" data-id="clweyy70r0000cxqe90cs9jyx" data-title="Beyond Compare 试用期" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -588,11 +676,79 @@ msys2_shell.cmd
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://illusorycat.github.io/2024/05/20/Compile-FFMPEG-on-Windows/" data-id="clwew9ayn0005lhqedr8g5yvg" data-title="Windows 下编译 FFMPEG" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://illusorycat.github.io/2024/05/20/Compile-FFMPEG-on-Windows/" data-id="clweyy70u0003cxqe7cjw1v8p" data-title="Windows 下编译 FFMPEG" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Hexo-environment-configuration" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/05/20/Hexo-environment-configuration/" class="article-date">
+  <time class="dt-published" datetime="2024-05-20T01:13:17.000Z" itemprop="datePublished">2024-05-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/05/20/Hexo-environment-configuration/">Hexo 环境配置</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><p><a href="#1">前言</a><br><a href="#2">本地环境</a><br><a href="#3">云端环境</a></p>
+<h1 id="1">前言</h1>
+
+<p>本文记录笔记使用 Hexo 搭建个人博客网站的过程。<br></p>
+<h1 id="2">本地环境</h1>
+
+<h2 id="运行环境"><a href="#运行环境" class="headerlink" title="运行环境"></a>运行环境</h2><p>本地需要先安装 Git 和 Node.js ，具体安装可以参考<a target="_blank" rel="noopener" href="https://hexo.io/docs/">此文档</a>。<br>前置环境安装完成后后，执行下述语句安装 Hexo ：<br></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+<p>如果有遇到没有文件夹访问权限问题，可以使用下述语句：<br></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -R `whiami` path</span><br></pre></td></tr></table></figure>
+<h2 id="本地博客"><a href="#本地博客" class="headerlink" title="本地博客"></a>本地博客</h2><p>使用下述指令创建博客工作空间：<br></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init &lt;folder&gt;</span><br></pre></td></tr></table></figure>
+<p>一个比较常见的博客工作空间结构如下：<br><br><img src="https://raw.githubusercontent.com/illusorycat/MyPictureBase/main/image/202405202026908.png"><br>创建完成后，我们可以修改 _config.yml 文件中的内容来简单的自定义我们的博客网站。<br><br><img src="https://raw.githubusercontent.com/illusorycat/MyPictureBase/main/image/202405202023026.png"><br>比较主要的字段是 <strong>title</strong> 和 <strong>author</strong> 。<strong>language</strong> 字段是在语言国际性下标识默认语言。<strong>timezone</strong>字段会自动识别，如果需要也可以静态固定。<br><br>source 文件夹一般用于存放文章， <strong>_posts</strong> 存放要发表的文章， <strong>_drafts</strong> 存放草稿。<br><br>themes 文件夹存放我们需要的主体，可以在<a target="_blank" rel="noopener" href="https://hexo.io/themes/">官网</a>查找需要的主题然后应用到自己的博客网站上。但是一般刚搭建时不推荐大家去过多的关注主题，而是先完成网站搭建并运作起来。<br><br>使用下述语句创建新文章，默认会存放在 _posts 文件夹中：<br></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new &quot;article name&quot;</span><br></pre></td></tr></table></figure>
+<p>使用下述指定编译并本地运行博客网站：<br></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo server</span><br></pre></td></tr></table></figure>
+<p>然后就可以通过 <code>http://localhost:4000/</code> 访问。<br></p>
+<h1 id="3">云端环境</h1>
+
+<p>搭建个人博客网站肯定是希望被别人看见，那我们就需要把博客站点部署在云端，才可以让别人通过浏览器访问到。<br><br>笔者选择了在 Github Pags 部署，方便且快捷。<br></p>
+<h2 id="github-账户设置"><a href="#github-账户设置" class="headerlink" title="github 账户设置"></a>github 账户设置</h2><p>你需要有一个 <a target="_blank" rel="noopener" href="https://github.com/">github</a> 账户。<br>接着你需要创建一个私人访问 Token ，如果你已经有就不需要重新创建。<br><br>点击 github 网站右上角的头像，选择 “Settings” 进入设置页。然后在侧边栏找到 “Developer settings” 进入开发者设置页。最后选择创建私人 Token(classic) 。<br><br><img src="https://raw.githubusercontent.com/illusorycat/MyPictureBase/main/image/202403201411328.png"><br><br>设置 Token 的过期时间时可以尽可能的延长它或者直接选择不过期。勾选下面的 “repo” 项。最后点击最下方的 “Generate Token” 按键即可。<br><br><img src="https://raw.githubusercontent.com/illusorycat/MyPictureBase/main/image/202403201413750.png"><br><br>然后你就可以看到你生成的私人 Token ，请确保不要让其他人知晓它，在离开这个界面之前复制并保存它，否则你将找不到它。<br><br><img src="https://raw.githubusercontent.com/illusorycat/MyPictureBase/main/image/202403201416467.png"><br></p>
+<h2 id="github-仓库"><a href="#github-仓库" class="headerlink" title="github 仓库"></a>github 仓库</h2><p>假设你到 GitHub 账户名为 myName ，你需要新建一个 Github 仓库，仓库名为 <code>myName.github.io</code>。勾选添加 README 文件。<br><br><img src="https://raw.githubusercontent.com/illusorycat/MyPictureBase/main/image/202405202042714.png"><br>在本地进入你的博客工作空间，然后将github 仓库克隆到此空间：<br></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd myBlog/</span><br><span class="line">git clone https://github.com/myName/myName.github.io.git ./</span><br></pre></td></tr></table></figure>
+<p><code>https://github.com/myName/myName.github.io.git</code> 是 github 上创建的仓库路径，<code>./</code> 是表示克隆到当前目录，也就是博客工作空间文件夹。<br><br>在第一次执行 git 指令时，一般会让你输入相关信息，输入你的 github 账户名称和邮箱，已经上述提到的私人 Token 即可。如果你需要一个可视化操作界面，也可以直接下载 github Desktop 客户端。<br><br>执行下述语句编译博客网站：<br></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br></pre></td></tr></table></figure>
+<p>执行下述语句将修改提交到 github 上：<br></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m &quot;first modify&quot;</span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
+<p>这样子你的修改就上传到 github 了。然后你就可以通过 myName.github.io 访问到你的博客网站了。默认一开始就有一篇 hello 文章在其中。<br><br>之后只需要在 _posts 文件夹中撰写新的文章，然后重新上述流程上传即可。<br></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://illusorycat.github.io/2024/05/20/Hexo-environment-configuration/" data-id="clweyy70v0005cxqe52rm2omg" data-title="Hexo 环境配置" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li></ul>
 
     </footer>
   </div>
@@ -648,7 +804,7 @@ msys2_shell.cmd
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://illusorycat.github.io/2024/05/20/Build-gallery-with-PicGo/" data-id="clwew9aym0003lhqehnxmeef5" data-title="使用 PicGo 搭建图床" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://illusorycat.github.io/2024/05/20/Build-gallery-with-PicGo/" data-id="clweyy70t0001cxqe2s9q0jhv" data-title="使用 PicGo 搭建图床" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -971,7 +1127,7 @@ msys2_shell.cmd
 <pre><code>&lt;https://markdown.com.cn&gt;
 &lt;fake@example.com&gt;
 </code></pre>
-<p>渲染效果如下：<br><br><a target="_blank" rel="noopener" href="https://markdown.com.cn/">https://markdown.com.cn</a><br><a href="mailto:&#x66;&#97;&#x6b;&#101;&#64;&#x65;&#x78;&#x61;&#109;&#x70;&#108;&#101;&#46;&#99;&#111;&#x6d;">&#x66;&#97;&#x6b;&#101;&#64;&#x65;&#x78;&#x61;&#109;&#x70;&#108;&#101;&#46;&#99;&#111;&#x6d;</a></p>
+<p>渲染效果如下：<br><br><a target="_blank" rel="noopener" href="https://markdown.com.cn/">https://markdown.com.cn</a><br><a href="mailto:&#x66;&#x61;&#107;&#x65;&#64;&#x65;&#x78;&#97;&#x6d;&#x70;&#108;&#101;&#46;&#x63;&#x6f;&#x6d;">&#x66;&#x61;&#107;&#x65;&#64;&#x65;&#x78;&#97;&#x6d;&#x70;&#108;&#101;&#46;&#x63;&#x6f;&#x6d;</a></p>
 <h4 id="带格式的链接"><a href="#带格式的链接" class="headerlink" title="带格式的链接"></a>带格式的链接</h4><p>你可以使用一些格式强调你的链接，比如粗体和斜体。<br></p>
 <pre><code>I love supporting the **[EFF](https://eff.org)**.
 I love supporting the *[EFF](https://eff.org)*.
@@ -1151,7 +1307,7 @@ Second Term
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://illusorycat.github.io/2024/05/20/Markdown-brief/" data-id="clwew9ayn0007lhqefrzn4k6m" data-title="Markdown 简述" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://illusorycat.github.io/2024/05/20/Markdown-brief/" data-id="clweyy70w0008cxqedynr43dw" data-title="Markdown 简述" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -1178,7 +1334,7 @@ Second Term
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%AD%E6%B3%95/" rel="tag">语法</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BB%A3%E7%A0%81%E4%BA%BA%E7%94%9F/" rel="tag">代码人生</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%AD%E6%B3%95/" rel="tag">语法</a></li></ul>
     </div>
   </div>
 
@@ -1188,7 +1344,7 @@ Second Term
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 20px;">工具</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E8%AF%AD%E6%B3%95/" style="font-size: 20px;">语法</a>
+      <a href="/tags/%E4%BB%A3%E7%A0%81%E4%BA%BA%E7%94%9F/" style="font-size: 10px;">代码人生</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 20px;">工具</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E8%AF%AD%E6%B3%95/" style="font-size: 15px;">语法</a>
     </div>
   </div>
 
@@ -1210,6 +1366,10 @@ Second Term
       <ul>
         
           <li>
+            <a href="/2024/05/20/Start-with-Flutter-%E2%85%A0/">Flutter 入门指引 Ⅰ</a>
+          </li>
+        
+          <li>
             <a href="/2024/05/20/Dart-brief/">Dart 简述</a>
           </li>
         
@@ -1222,11 +1382,7 @@ Second Term
           </li>
         
           <li>
-            <a href="/2024/05/20/Build-gallery-with-PicGo/">使用 PicGo 搭建图床</a>
-          </li>
-        
-          <li>
-            <a href="/2024/05/20/Markdown-brief/">Markdown 简述</a>
+            <a href="/2024/05/20/Hexo-environment-configuration/">Hexo 环境配置</a>
           </li>
         
       </ul>

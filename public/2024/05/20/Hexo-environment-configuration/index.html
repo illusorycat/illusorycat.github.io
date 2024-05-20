@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Hexo 环境配置 | 茶舍</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="目录前言本地环境云端环境 前言  本文记录笔记使用 Hexo 搭建个人博客网站的过程。 本地环境  运行环境本地需要先安装 Git 和 Node.js ，具体安装可以参考此文档。前置环境安装完成后后，执行下述语句安装 Hexo ： 1sudo npm install -g hexo-cli 如果有遇到没有文件夹访问权限问题，可以使用下述语句： 1sudo chown -R &#96;whiami&#96; pat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo 环境配置">
+<meta property="og:url" content="https://illusorycat.github.io/2024/05/20/Hexo-environment-configuration/index.html">
+<meta property="og:site_name" content="茶舍">
+<meta property="og:description" content="目录前言本地环境云端环境 前言  本文记录笔记使用 Hexo 搭建个人博客网站的过程。 本地环境  运行环境本地需要先安装 Git 和 Node.js ，具体安装可以参考此文档。前置环境安装完成后后，执行下述语句安装 Hexo ： 1sudo npm install -g hexo-cli 如果有遇到没有文件夹访问权限问题，可以使用下述语句： 1sudo chown -R &#96;whiami&#96; pat">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/illusorycat/MyPictureBase/main/image/202405202026908.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/illusorycat/MyPictureBase/main/image/202405202023026.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/illusorycat/MyPictureBase/main/image/202403201411328.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/illusorycat/MyPictureBase/main/image/202403201413750.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/illusorycat/MyPictureBase/main/image/202403201416467.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/illusorycat/MyPictureBase/main/image/202405202042714.png">
+<meta property="article:published_time" content="2024-05-20T01:13:17.000Z">
+<meta property="article:modified_time" content="2024-05-20T12:52:40.240Z">
+<meta property="article:author" content="Illusory">
+<meta property="article:tag" content="工具">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/illusorycat/MyPictureBase/main/image/202405202026908.png">
+  
+    <link rel="alternate" href="/atom.xml" title="茶舍" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">茶舍</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://illusorycat.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Hexo-environment-configuration" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/05/20/Hexo-environment-configuration/" class="article-date">
+  <time class="dt-published" datetime="2024-05-20T01:13:17.000Z" itemprop="datePublished">2024-05-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Hexo 环境配置
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><p><a href="#1">前言</a><br><a href="#2">本地环境</a><br><a href="#3">云端环境</a></p>
+<h1 id="1">前言</h1>
+
+<p>本文记录笔记使用 Hexo 搭建个人博客网站的过程。<br></p>
+<h1 id="2">本地环境</h1>
+
+<h2 id="运行环境"><a href="#运行环境" class="headerlink" title="运行环境"></a>运行环境</h2><p>本地需要先安装 Git 和 Node.js ，具体安装可以参考<a target="_blank" rel="noopener" href="https://hexo.io/docs/">此文档</a>。<br>前置环境安装完成后后，执行下述语句安装 Hexo ：<br></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+<p>如果有遇到没有文件夹访问权限问题，可以使用下述语句：<br></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -R `whiami` path</span><br></pre></td></tr></table></figure>
+<h2 id="本地博客"><a href="#本地博客" class="headerlink" title="本地博客"></a>本地博客</h2><p>使用下述指令创建博客工作空间：<br></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init &lt;folder&gt;</span><br></pre></td></tr></table></figure>
+<p>一个比较常见的博客工作空间结构如下：<br><br><img src="https://raw.githubusercontent.com/illusorycat/MyPictureBase/main/image/202405202026908.png"><br>创建完成后，我们可以修改 _config.yml 文件中的内容来简单的自定义我们的博客网站。<br><br><img src="https://raw.githubusercontent.com/illusorycat/MyPictureBase/main/image/202405202023026.png"><br>比较主要的字段是 <strong>title</strong> 和 <strong>author</strong> 。<strong>language</strong> 字段是在语言国际性下标识默认语言。<strong>timezone</strong>字段会自动识别，如果需要也可以静态固定。<br><br>source 文件夹一般用于存放文章， <strong>_posts</strong> 存放要发表的文章， <strong>_drafts</strong> 存放草稿。<br><br>themes 文件夹存放我们需要的主体，可以在<a target="_blank" rel="noopener" href="https://hexo.io/themes/">官网</a>查找需要的主题然后应用到自己的博客网站上。但是一般刚搭建时不推荐大家去过多的关注主题，而是先完成网站搭建并运作起来。<br><br>使用下述语句创建新文章，默认会存放在 _posts 文件夹中：<br></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new &quot;article name&quot;</span><br></pre></td></tr></table></figure>
+<p>使用下述指定编译并本地运行博客网站：<br></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo server</span><br></pre></td></tr></table></figure>
+<p>然后就可以通过 <code>http://localhost:4000/</code> 访问。<br></p>
+<h1 id="3">云端环境</h1>
+
+<p>搭建个人博客网站肯定是希望被别人看见，那我们就需要把博客站点部署在云端，才可以让别人通过浏览器访问到。<br><br>笔者选择了在 Github Pags 部署，方便且快捷。<br></p>
+<h2 id="github-账户设置"><a href="#github-账户设置" class="headerlink" title="github 账户设置"></a>github 账户设置</h2><p>你需要有一个 <a target="_blank" rel="noopener" href="https://github.com/">github</a> 账户。<br>接着你需要创建一个私人访问 Token ，如果你已经有就不需要重新创建。<br><br>点击 github 网站右上角的头像，选择 “Settings” 进入设置页。然后在侧边栏找到 “Developer settings” 进入开发者设置页。最后选择创建私人 Token(classic) 。<br><br><img src="https://raw.githubusercontent.com/illusorycat/MyPictureBase/main/image/202403201411328.png"><br><br>设置 Token 的过期时间时可以尽可能的延长它或者直接选择不过期。勾选下面的 “repo” 项。最后点击最下方的 “Generate Token” 按键即可。<br><br><img src="https://raw.githubusercontent.com/illusorycat/MyPictureBase/main/image/202403201413750.png"><br><br>然后你就可以看到你生成的私人 Token ，请确保不要让其他人知晓它，在离开这个界面之前复制并保存它，否则你将找不到它。<br><br><img src="https://raw.githubusercontent.com/illusorycat/MyPictureBase/main/image/202403201416467.png"><br></p>
+<h2 id="github-仓库"><a href="#github-仓库" class="headerlink" title="github 仓库"></a>github 仓库</h2><p>假设你到 GitHub 账户名为 myName ，你需要新建一个 Github 仓库，仓库名为 <code>myName.github.io</code>。勾选添加 README 文件。<br><br><img src="https://raw.githubusercontent.com/illusorycat/MyPictureBase/main/image/202405202042714.png"><br>在本地进入你的博客工作空间，然后将github 仓库克隆到此空间：<br></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd myBlog/</span><br><span class="line">git clone https://github.com/myName/myName.github.io.git ./</span><br></pre></td></tr></table></figure>
+<p><code>https://github.com/myName/myName.github.io.git</code> 是 github 上创建的仓库路径，<code>./</code> 是表示克隆到当前目录，也就是博客工作空间文件夹。<br><br>在第一次执行 git 指令时，一般会让你输入相关信息，输入你的 github 账户名称和邮箱，已经上述提到的私人 Token 即可。如果你需要一个可视化操作界面，也可以直接下载 github Desktop 客户端。<br><br>执行下述语句编译博客网站：<br></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br></pre></td></tr></table></figure>
+<p>执行下述语句将修改提交到 github 上：<br></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m &quot;first modify&quot;</span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
+<p>这样子你的修改就上传到 github 了。然后你就可以通过 myName.github.io 访问到你的博客网站了。默认一开始就有一篇 hello 文章在其中。<br><br>之后只需要在 _posts 文件夹中撰写新的文章，然后重新上述流程上传即可。<br></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://illusorycat.github.io/2024/05/20/Hexo-environment-configuration/" data-id="clweyy70v0005cxqe52rm2omg" data-title="Hexo 环境配置" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2024/05/20/Compile-FFMPEG-on-Windows/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          Windows 下编译 FFMPEG
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2024/05/20/Build-gallery-with-PicGo/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">使用 PicGo 搭建图床</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BB%A3%E7%A0%81%E4%BA%BA%E7%94%9F/" rel="tag">代码人生</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%AD%E6%B3%95/" rel="tag">语法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E4%BB%A3%E7%A0%81%E4%BA%BA%E7%94%9F/" style="font-size: 10px;">代码人生</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 20px;">工具</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E8%AF%AD%E6%B3%95/" style="font-size: 15px;">语法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">五月 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/05/20/Start-with-Flutter-%E2%85%A0/">Flutter 入门指引 Ⅰ</a>
+          </li>
+        
+          <li>
+            <a href="/2024/05/20/Dart-brief/">Dart 简述</a>
+          </li>
+        
+          <li>
+            <a href="/2024/05/20/Beyond-Compare-probation/">Beyond Compare 试用期</a>
+          </li>
+        
+          <li>
+            <a href="/2024/05/20/Compile-FFMPEG-on-Windows/">Windows 下编译 FFMPEG</a>
+          </li>
+        
+          <li>
+            <a href="/2024/05/20/Hexo-environment-configuration/">Hexo 环境配置</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 Illusory<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

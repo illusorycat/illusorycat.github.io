@@ -293,7 +293,7 @@ I love supporting the [`EFF`](https://eff.org)
 ### 12. 内嵌 HTML 标签
 Markdown 支持内嵌 HTML 标签。
 对于 HTML 的行级内联标签如`<span>`、`<cite>`、`<del>`不受限制，可以中 Markdown 的段落、列表或者标题中任意使用。<br>
-但是对于区块标签如`<div>`、`<table>`、`<pre>`、`<p>`等标签，必须中前后加上空行，一百年与内容区分。
+但是对于区块标签如`<div>`、`<table>`、`<pre>`、`<p>`等标签，必须在前后加上空行，以便与内容区分。
 同时， Markdown 语法无法在 HTML 区块中进行处理。也就是说，你无法在 HTML 区块中使用 Markdown 语法。<br>
 
 <h1 id="3">Markdown 扩展语法</h1>

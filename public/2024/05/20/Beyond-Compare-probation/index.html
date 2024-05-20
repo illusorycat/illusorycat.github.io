@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Beyond Compare 试用期 | 茶舍</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="目录前言MacOS 下的解决方案Windows 下的解决方案 前言  本教程旨在记录笔者是如何解决使用 Beyond Compare 时遇到试用期到期问题。Beyond Compare 软件可以直接在官网上下载，笔者自己使用的 Beyond Compare 4。 MacOS 下的解决方案   第一步，进入 Beyond Compare 软件应用目录，路径如下： &#x2F;Applications&#x2F;Beyo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Beyond Compare 试用期">
+<meta property="og:url" content="https://illusorycat.github.io/blog/2024/05/20/Beyond-Compare-probation/index.html">
+<meta property="og:site_name" content="茶舍">
+<meta property="og:description" content="目录前言MacOS 下的解决方案Windows 下的解决方案 前言  本教程旨在记录笔者是如何解决使用 Beyond Compare 时遇到试用期到期问题。Beyond Compare 软件可以直接在官网上下载，笔者自己使用的 Beyond Compare 4。 MacOS 下的解决方案   第一步，进入 Beyond Compare 软件应用目录，路径如下： &#x2F;Applications&#x2F;Beyo">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/illusorycat/MyPictureBase/main/image/202404090954164.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/illusorycat/MyPictureBase/main/image/202404090959396.png">
+<meta property="article:published_time" content="2024-05-20T01:23:46.000Z">
+<meta property="article:modified_time" content="2024-05-20T01:24:24.405Z">
+<meta property="article:author" content="Illusory">
+<meta property="article:tag" content="工具">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/illusorycat/MyPictureBase/main/image/202404090954164.png">
+  
+    <link rel="alternate" href="/blog/atom.xml" title="茶舍" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/blog/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/blog/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/blog/" id="logo">茶舍</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/blog/atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://illusorycat.github.io/blog"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Beyond-Compare-probation" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/blog/2024/05/20/Beyond-Compare-probation/" class="article-date">
+  <time class="dt-published" datetime="2024-05-20T01:23:46.000Z" itemprop="datePublished">2024-05-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Beyond Compare 试用期
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><p><a href="#1">前言</a><br><a href="#2">MacOS 下的解决方案</a><br><a href="#3">Windows 下的解决方案</a></p>
+<h1 id="1">前言</h1>
+
+<p>本教程旨在记录笔者是如何解决使用 <strong>Beyond Compare</strong> 时遇到试用期到期问题。<br><br>Beyond Compare 软件可以直接在<a target="_blank" rel="noopener" href="https://www.scootersoftware.com/download">官网</a>上下载，笔者自己使用的 Beyond Compare 4。<br></p>
+<h1 id="2">MacOS 下的解决方案</h1>
+
+<p> 第一步，进入 Beyond Compare 软件应用目录，路径如下：<br></p>
+<pre><code>/Applications/Beyond Compare.app/Contents/MacOS
+</code></pre>
+<p>第二步，修改启动程序文件 BCompare 为 BCompare.real<br></p>
+<pre><code>mv Bcompare Bcompare.real
+</code></pre>
+<p>第三步，创建一个新的启动程序文件 BCompare<br></p>
+<pre><code>vi BCompare
+</code></pre>
+<p>文件内容如下：<br></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除注册信息</span></span><br><span class="line">rm &quot;/Users/$(whoami)/Library/Application Support/Beyond Compare/registry.dat&quot;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">启动真实的Bcompare文件</span></span><br><span class="line">&quot;`dirname &quot;$0&quot;`&quot;/BCompare.real $@</span><br></pre></td></tr></table></figure>
+
+<p>该脚本的作用时，删除 Beyond Compare 下的注册信息文件，然后再启动真实的 BCompare 启动脚本。<br><br>第四步，给新创建的启动脚本权限：<br></p>
+<pre><code>chmod a+x /Applications/Beyond\ Compare.app/Contents/MacOS/BCompare
+</code></pre>
+<p>完成以上步骤后，打开 Beyond Compare 就可以正常使用了。你可以注意到，每天打开后显示的剩余试用期时间都是满的。<br></p>
+<h1 id="3">Windows 下的解决方案</h1>
+
+<p>第一步，打开注册表<br><br>使用 <code>Win+R</code> 快捷键打开运行对话框，输入 <code>regedit</code> 打开注册表<br>第二步，找到 Beyond Compare 在注册表中的路径<br></p>
+<pre><code>计算机\HKEY_CURRENT_USER\SOFTWARE\Scooter Software\Beyond Compare 4
+</code></pre>
+<p>第三步，删除其中的 CacheID 后，重新打开软件，可以看到又有30天的试用期了。<br><br><img src="https://raw.githubusercontent.com/illusorycat/MyPictureBase/main/image/202404090954164.png"></p>
+<h3 id="添加定时任务"><a href="#添加定时任务" class="headerlink" title="添加定时任务"></a>添加定时任务</h3><p>每次等软件到期后再去删除注册表信息很麻烦，可以在计算机管理中添加一个计划程序。<br><br>第一步，打开计算机管理<br><br>使用 <code>Win+R</code> 快捷键打开运行对话框，输入 <code>compmgmt.msc</code> 即可打开计算机管理。<br><br>第二步，选择任务计划程序库，导入任务<br><br><img src="https://raw.githubusercontent.com/illusorycat/MyPictureBase/main/image/202404090959396.png"><br>第三步，将下面 xml 代码保存为 xml 文件，用作第二步中导入任务<br></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-16&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">Task</span> <span class="attr">version</span>=<span class="string">&quot;1.2&quot;</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://schemas.microsoft.com/windows/2004/02/mit/task&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">RegistrationInfo</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Date</span>&gt;</span>2023-12-30T10:40:05.8128741<span class="tag">&lt;/<span class="name">Date</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Author</span>&gt;</span>JiacaiGuo<span class="tag">&lt;/<span class="name">Author</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Description</span>&gt;</span>清除Beyond Compare 4 有30天试用期<span class="tag">&lt;/<span class="name">Description</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">URI</span>&gt;</span>\Beyond Compare Clear Trial<span class="tag">&lt;/<span class="name">URI</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">RegistrationInfo</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">Triggers</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">CalendarTrigger</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">StartBoundary</span>&gt;</span>2023-12-30T10:00:00<span class="tag">&lt;/<span class="name">StartBoundary</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">Enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">Enabled</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">ScheduleByMonth</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">DaysOfMonth</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">Day</span>&gt;</span>1<span class="tag">&lt;/<span class="name">Day</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">DaysOfMonth</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Months</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">January</span> /&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">February</span> /&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">March</span> /&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">April</span> /&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">May</span> /&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">June</span> /&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">July</span> /&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">August</span> /&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">September</span> /&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">October</span> /&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">November</span> /&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">December</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">Months</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">ScheduleByMonth</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">CalendarTrigger</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">Triggers</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">Principals</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Principal</span> <span class="attr">id</span>=<span class="string">&quot;Author&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">UserId</span>&gt;</span>S-1-5-21-1882866539-4086113214-3650236343-1001<span class="tag">&lt;/<span class="name">UserId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">LogonType</span>&gt;</span>InteractiveToken<span class="tag">&lt;/<span class="name">LogonType</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">RunLevel</span>&gt;</span>LeastPrivilege<span class="tag">&lt;/<span class="name">RunLevel</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">Principal</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">Principals</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">Settings</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">MultipleInstancesPolicy</span>&gt;</span>IgnoreNew<span class="tag">&lt;/<span class="name">MultipleInstancesPolicy</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">DisallowStartIfOnBatteries</span>&gt;</span>true<span class="tag">&lt;/<span class="name">DisallowStartIfOnBatteries</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">StopIfGoingOnBatteries</span>&gt;</span>true<span class="tag">&lt;/<span class="name">StopIfGoingOnBatteries</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">AllowHardTerminate</span>&gt;</span>true<span class="tag">&lt;/<span class="name">AllowHardTerminate</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">StartWhenAvailable</span>&gt;</span>false<span class="tag">&lt;/<span class="name">StartWhenAvailable</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">RunOnlyIfNetworkAvailable</span>&gt;</span>false<span class="tag">&lt;/<span class="name">RunOnlyIfNetworkAvailable</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">IdleSettings</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">StopOnIdleEnd</span>&gt;</span>true<span class="tag">&lt;/<span class="name">StopOnIdleEnd</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">RestartOnIdle</span>&gt;</span>false<span class="tag">&lt;/<span class="name">RestartOnIdle</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">IdleSettings</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">AllowStartOnDemand</span>&gt;</span>true<span class="tag">&lt;/<span class="name">AllowStartOnDemand</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">Enabled</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Hidden</span>&gt;</span>false<span class="tag">&lt;/<span class="name">Hidden</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">RunOnlyIfIdle</span>&gt;</span>false<span class="tag">&lt;/<span class="name">RunOnlyIfIdle</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">WakeToRun</span>&gt;</span>false<span class="tag">&lt;/<span class="name">WakeToRun</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ExecutionTimeLimit</span>&gt;</span>PT72H<span class="tag">&lt;/<span class="name">ExecutionTimeLimit</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Priority</span>&gt;</span>7<span class="tag">&lt;/<span class="name">Priority</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">Settings</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">Actions</span> <span class="attr">Context</span>=<span class="string">&quot;Author&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Exec</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">Command</span>&gt;</span>C:\Windows\System32\reg.exe<span class="tag">&lt;/<span class="name">Command</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">Arguments</span>&gt;</span>delete &quot;hkey_current_user\software\scooter software\beyond compare 4&quot; /v cacheid /f<span class="tag">&lt;/<span class="name">Arguments</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">Exec</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">Actions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Task</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>其中， <code>&lt;Author&gt;</code> 、 <code>&lt;UserId&gt;</code> 请改为本机信息。可以通过导出其他的本机计划来查看这两个信息。<br></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://illusorycat.github.io/blog/2024/05/20/Beyond-Compare-probation/" data-id="clweah1hs0000hrqefbzx5hz8" data-title="Beyond Compare 试用期" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/blog/2024/05/20/Dart-brief/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          Dart 简述
+        
+      </div>
+    </a>
+  
+  
+    <a href="/blog/2024/05/20/Compile-FFMPEG-on-Windows/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">Windows 下编译 FFMPEG</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/%E8%AF%AD%E6%B3%95/" rel="tag">语法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/blog/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 20px;">工具</a> <a href="/blog/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/blog/tags/%E8%AF%AD%E6%B3%95/" style="font-size: 15px;">语法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2024/05/">五月 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2024/05/20/Dart-brief/">Dart 简述</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2024/05/20/Beyond-Compare-probation/">Beyond Compare 试用期</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2024/05/20/Compile-FFMPEG-on-Windows/">Windows 下编译 FFMPEG</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2024/05/20/Hexo-environment-configuration/">Hexo 环境配置</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2024/05/20/Build-gallery-with-PicGo/">使用 PicGo 搭建图床</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 Illusory<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/blog/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/blog/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/blog/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

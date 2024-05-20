@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Windows 下编译 FFMPEG | 茶舍</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="目录前言Windows 下安装编译 FFMPEG 前言  本教程旨在记录自己源码编译安装 FFMPEG 的过程。如果没有修改源码需求，笔者还是更建议直接从官网推荐途径或者其他可信途径下载二进制文件后使用。 Windows 下安装编译 FFMPEG  首先我们要准备好编译环境，笔者这儿准备的是一台装有 Windows10 系统电脑，同时安装了 Visual Studio 2019。在 Windows">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows 下编译 FFMPEG">
+<meta property="og:url" content="https://illusorycat.github.io/blog/2024/05/20/Compile-FFMPEG-on-Windows/index.html">
+<meta property="og:site_name" content="茶舍">
+<meta property="og:description" content="目录前言Windows 下安装编译 FFMPEG 前言  本教程旨在记录自己源码编译安装 FFMPEG 的过程。如果没有修改源码需求，笔者还是更建议直接从官网推荐途径或者其他可信途径下载二进制文件后使用。 Windows 下安装编译 FFMPEG  首先我们要准备好编译环境，笔者这儿准备的是一台装有 Windows10 系统电脑，同时安装了 Visual Studio 2019。在 Windows">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-05-20T01:19:06.000Z">
+<meta property="article:modified_time" content="2024-05-20T01:21:56.323Z">
+<meta property="article:author" content="Illusory">
+<meta property="article:tag" content="源码">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/blog/atom.xml" title="茶舍" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/blog/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/blog/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/blog/" id="logo">茶舍</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/blog/atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://illusorycat.github.io/blog"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Compile-FFMPEG-on-Windows" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/blog/2024/05/20/Compile-FFMPEG-on-Windows/" class="article-date">
+  <time class="dt-published" datetime="2024-05-20T01:19:06.000Z" itemprop="datePublished">2024-05-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Windows 下编译 FFMPEG
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><p><a href="#1">前言</a><br><a href="#2">Windows 下安装编译 FFMPEG</a></p>
+<h1 id="1">前言</h1>
+
+<p>本教程旨在记录自己源码编译安装 <strong>FFMPEG</strong> 的过程。<br><br>如果没有修改源码需求，笔者还是更建议直接从<a target="_blank" rel="noopener" href="https://ffmpeg.org/download.html">官网推荐途径</a>或者其他可信途径下载二进制文件后使用。<br></p>
+<h1 id="2">Windows 下安装编译 FFMPEG</h1>
+
+<p>首先我们要准备好编译环境，笔者这儿准备的是一台装有 Windows10 系统电脑，同时安装了 Visual Studio 2019。<br><br>在 Windows 下编译 FFMPEG 我们还需要借助 MSYS2 ，可以<a target="_blank" rel="noopener" href="https://www.msys2.org/">在此下载</a>此软件。我们会在 MSYS2 环境中编译 FFMPEG ，编译时使用的编译器( cl.exe ) 和链接器( link.exe ) 则是由 VS2019 提供的。也就是说，我们使用的是 MSYS2 + MSVC 的方案。<br></p>
+<h3 id="下载源码"><a href="#下载源码" class="headerlink" title="下载源码"></a>下载源码</h3><p>编译环境准备好之后，我们下载一份 FFMPEG 源码，你可以是直接下载<a target="_blank" rel="noopener" href="https://git.ffmpeg.org/ffmpeg.git">最新版本</a>，也可以从官网下载<a target="_blank" rel="noopener" href="https://ffmpeg.org/download.html">指定版本</a>。<br><br>源码下载后需要修改源码，将其中包含 CC_IDENT 宏的代码注释掉。否则会在编译时遇到如下错误。<br></p>
+<pre><code>error C2296: “%”: 非法，左操作数包含“char [138]”类型
+</code></pre>
+<p>源码中最好不要包含任何中文字符，否则中编译时会出现很多如下警告：<br></p>
+<pre><code> warning C4828: 文件包含在偏移 0x227 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+</code></pre>
+<p>这同样意味着，你要删除 CC_IDENT 这个宏定义，因为其包含中文字符。<br></p>
+<h3 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h3><p>在打开 MSYS2 前，我们先进入它的安装目录，修改 <strong>msys2_shell.cmd</strong> 文件，将文件中第<strong>17</strong>行代码打开，即去掉 <strong>rem</strong> 关键字，如下所示：<br></p>
+<pre><code>@echo off
+setlocal EnableDelayedExpansion
+
+set &quot;WD=%__CD__%&quot;
+if NOT EXIST &quot;%WD%msys-2.0.dll&quot; set &quot;WD=%~dp0usr\bin\&quot;
+set &quot;LOGINSHELL=bash&quot;
+set /a msys2_shiftCounter=0
+
+rem To activate windows native symlinks uncomment next line
+rem set MSYS=winsymlinks:nativestrict
+
+rem Set debugging program for errors
+rem set MSYS=error_start:%WD%../../mingw64/bin/qtcreator.exe^|-debug^|^&lt;process-id^&gt;
+
+rem To export full current PATH from environment into MSYS2 use &#39;-use-full-path&#39; parameter
+rem or uncomment next line
+set MSYS2_PATH_TYPE=inherit
+...
+</code></pre>
+<p>打开后， MSYS2 可以继承 Windows 控制台的环境变量。<br>之后，打开 <code>x64 Native Tools Command Prompt for VS 2019</code> 命令窗口，可以通过如下方式找到：<br></p>
+<pre><code>Windows 开始菜单 -&gt; Visual Studio 2019 -&gt; x64 Native Tools Command Prompt for VS 2019
+</code></pre>
+<p>然后在该命令窗口中输入下面的命令启动 MSYS2 软件：<br></p>
+<pre><code>#切换盘符，如果需要的话
+#d:
+
+#进入 MSYS2 的安装目录
+cd D:\Application\msys64
+
+#启动 MSYS2
+msys2_shell.cmd
+</code></pre>
+<p>此时会弹出 MSYS2 的命令窗口，在窗口中输入下面命令，安装必要的编译工具：<br></p>
+<pre><code>pacman -S diffutils make pkg-config yasm
+</code></pre>
+<p>当编译工具安装好后，在 MSYS2 命令窗口进入 FFMPEG 源码目录：<br></p>
+<pre><code>cd /d/WorkSpace/FFMPEG/ffmpeg-4.3.6
+</code></pre>
+<p>我的 FFMPEG 源码路径是 D:&#x2F;WorkSpace&#x2F;FFMPEG&#x2F;ffmpeg-4.3.6。<br><br>紧接着，运行 FFMPEG 源码目录中的 <code>configure</code> 脚本生成 <strong>Makefile</strong> 文件，如下：<br></p>
+<pre><code>./configure --prefix=/usr/local/ffmpeg --arch=x86_64 --disable-amd3dnow --disable-amd3dnowext --enable-gpl --enable-nonfree --enable-shared --disable-doc --disable-postproc --disable-avdevice --toolchain=msvc
+</code></pre>
+<p>上述命令的含义是使用 <strong>msvc</strong> 作为 FFMPEG 的编译工具链；编译安装的 FFMPEG 库被放到 <code>/usr/local/ffmpeg</code> 目录下，该目录是 MSYS2 环境下的目录；编译的是动态库。<br><br>至于其他的构建选项是基于笔者的需求，可以运行 <code>./configure --help</code> 查看支持哪些构建选项。<br><br>上述脚本执行完成后，中 FFMPEG 源码目录下会多一个 Makefile 文件，然后我们就可以编译安装 FFMPEG 了，执行如下命令：<br></p>
+<pre><code>make -j 8 &amp;&amp; make install
+</code></pre>
+<p>因为我们没有安装其他第三方库，因此会有一些内容是没有编译的，比如 ffplay.exe ，因为没有 SDL 库。有需要的话可以自行安装。<br><br>同时我们可以在执行 ffmpeg.exe 程序时看到我们的构建脚本，也就是说我们也可以运行其他途径提供的二进制程序来查看它们的构建脚本。<br></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://illusorycat.github.io/blog/2024/05/20/Compile-FFMPEG-on-Windows/" data-id="clweah1hv0003hrqeetro55d0" data-title="Windows 下编译 FFMPEG" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/blog/2024/05/20/Beyond-Compare-probation/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          Beyond Compare 试用期
+        
+      </div>
+    </a>
+  
+  
+    <a href="/blog/2024/05/20/Hexo-environment-configuration/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">Hexo 环境配置</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/%E8%AF%AD%E6%B3%95/" rel="tag">语法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/blog/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 20px;">工具</a> <a href="/blog/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/blog/tags/%E8%AF%AD%E6%B3%95/" style="font-size: 15px;">语法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2024/05/">五月 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2024/05/20/Dart-brief/">Dart 简述</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2024/05/20/Beyond-Compare-probation/">Beyond Compare 试用期</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2024/05/20/Compile-FFMPEG-on-Windows/">Windows 下编译 FFMPEG</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2024/05/20/Hexo-environment-configuration/">Hexo 环境配置</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2024/05/20/Build-gallery-with-PicGo/">使用 PicGo 搭建图床</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 Illusory<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/blog/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/blog/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/blog/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

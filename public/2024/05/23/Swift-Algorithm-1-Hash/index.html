@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Swift 算法-1-哈希 | 茶舍</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="目录前言两数之和字母异位词分组最长连续序列 前言  本文题目来源 LeetCode ，主要用于记录笔者的一些解题思路和思考。本文的主题是哈希。 两数之和  LeetCode 1. 两数之和 题目给定一个整数数组 nums 和一个整数目标值 target，请你在该数组中找出 和为目标值 target  的那 两个 整数，并返回它们的数组下标。你可以假设每种输入只会对应一个答案。但是，数组中同一个元素">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Swift 算法-1-哈希">
+<meta property="og:url" content="https://illusorycat.github.io/2024/05/23/Swift-Algorithm-1-Hash/index.html">
+<meta property="og:site_name" content="茶舍">
+<meta property="og:description" content="目录前言两数之和字母异位词分组最长连续序列 前言  本文题目来源 LeetCode ，主要用于记录笔者的一些解题思路和思考。本文的主题是哈希。 两数之和  LeetCode 1. 两数之和 题目给定一个整数数组 nums 和一个整数目标值 target，请你在该数组中找出 和为目标值 target  的那 两个 整数，并返回它们的数组下标。你可以假设每种输入只会对应一个答案。但是，数组中同一个元素">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-05-23T03:01:33.000Z">
+<meta property="article:modified_time" content="2024-05-23T03:38:46.993Z">
+<meta property="article:author" content="Illusory">
+<meta property="article:tag" content="Swift, 算法">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="茶舍" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">茶舍</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://illusorycat.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Swift-Algorithm-1-Hash" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/05/23/Swift-Algorithm-1-Hash/" class="article-date">
+  <time class="dt-published" datetime="2024-05-23T03:01:33.000Z" itemprop="datePublished">2024-05-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Swift 算法-1-哈希
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><p><a href="#1">前言</a><br><a href="#2">两数之和</a><br><a href="#3">字母异位词分组</a><br><a href="#4">最长连续序列</a></p>
+<h1 id="1">前言</h1>
+
+<p>本文题目来源 LeetCode ，主要用于记录笔者的一些解题思路和思考。<br><br>本文的主题是哈希。<br></p>
+<h1 id="2">两数之和</h1>
+
+<p>LeetCode 1. 两数之和<br></p>
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一个整数数组 nums 和一个整数目标值 target，请你在该数组中找出 和为目标值 target  的那 两个 整数，并返回它们的数组下标。<br><br>你可以假设每种输入只会对应一个答案。但是，数组中同一个元素在答案里不能重复出现。<br><br>你可以按任意顺序返回答案。<br></p>
+<h2 id="解题思考"><a href="#解题思考" class="headerlink" title="解题思考"></a>解题思考</h2><p>题目中提到了可以假定每种输入只会对应一个答案，因此我们找到答案后立即返回。<br><br>题目要求每个元素只能使用一次，但是并没有说元素的值是否会重复。不过只本题中只有前者条件是有意义的。<br><br>暴力解法，遍历数组中的所有元素 <code>x</code> ，同时遍历剩余的元素 <code>y</code> ，判断 <code>x + y == target</code> 。<br><br>优化解法，在遍历数组元素 <code>x</code> 时，查找是否存在 <code>target - y</code> 。同时在编译时将元素 <code>x</code> 与它的下标 <code>index</code> 插入哈希表保存。<br></p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">twoSum</span>(<span class="keyword">_</span> <span class="params">nums</span>: [<span class="type">Int</span>], <span class="keyword">_</span> <span class="params">target</span>: <span class="type">Int</span>) -&gt; [<span class="type">Int</span>] &#123;</span><br><span class="line">        <span class="keyword">var</span> hashtable <span class="operator">=</span> [<span class="type">Int</span>: <span class="type">Int</span>]()</span><br><span class="line">        <span class="keyword">for</span> (i, e) <span class="keyword">in</span> nums.enumerated() &#123;</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">let</span> v <span class="operator">=</span> hashtable[target <span class="operator">-</span> e] &#123;</span><br><span class="line">                <span class="keyword">return</span> [i, v]</span><br><span class="line">            &#125;</span><br><span class="line">            hashtable[e] <span class="operator">=</span> i</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> []</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="3">字母异位词分组</h1>
+
+<p>LeetCode 49. 字母异位词分组<br></p>
+<h2 id="题目-1"><a href="#题目-1" class="headerlink" title="题目"></a>题目</h2><p>给你一个字符串数组，请你将<strong>字母异位词</strong>组合在一起。可以按任意顺序返回结果列表。<br><br>字母异位词是由重新排列源单词的所有字母得到的一个新单词。<br></p>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>字母异位词指两个字符串中，字母值和数量一致。<br><br>因此我们需要考虑怎么怎么表示一组字母异位词，最简单的方法就是用字符串的字典序字符串来表示.然后使用哈希表存储，最后再转换成数组输出。<br></p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">groupAnagrams</span>(<span class="keyword">_</span> <span class="params">strs</span>: [<span class="type">String</span>]) -&gt; [[<span class="type">String</span>]] &#123;</span><br><span class="line">        <span class="keyword">var</span> hashList <span class="operator">=</span> [<span class="type">String</span>: [<span class="type">String</span>]]()</span><br><span class="line">        <span class="keyword">for</span> str <span class="keyword">in</span> strs &#123;</span><br><span class="line">            <span class="keyword">let</span> key <span class="operator">=</span> <span class="type">String</span>(str.sorted())</span><br><span class="line">            <span class="keyword">if</span> hashList[key] <span class="operator">==</span> <span class="literal">nil</span> &#123;</span><br><span class="line">                hashList[key] <span class="operator">=</span> [str]</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                hashList[key]<span class="operator">!</span>.append(str)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="type">Array</span>(hashList.values)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="4">最长连续序列</h1>
+
+<p>LeetCode 128. 最长连续序列<br></p>
+<h2 id="题目-2"><a href="#题目-2" class="headerlink" title="题目"></a>题目</h2><p>给定一个未排序的整数数组 nums ，找出数字连续的最长序列（不要求序列元素在原数组中连续）的长度。<br><br>请你设计并实现时间复杂度为 O(n) 的算法解决此问题。<br></p>
+<h2 id="解题思路-1"><a href="#解题思路-1" class="headerlink" title="解题思路"></a>解题思路</h2><p>最长序列，也就是说我们要找出数组中的连续序列，并获得其中最大的长度。<br><br>题目并没有说数组元素不重复，因此我们要先去重，最简单的就是使用 Set 。<br><br>接着，我们要在数组中找到一个序列 <code>x, x+1, x+2,x+n</code> ，则该序列长度就是 <code>n</code> 。<br><br>暴力搜索，遍历每个元素 <code>x</code> ，然后通过 <code>+1</code> 查找序列。<br>优化，因为暴力搜索会出现对序列的子序列重复查找。因此，我们先通过判断 <code>x-1</code> 是否中数组中，找到序列中的最小值，再开始查找整个序列，获取序列长度。<br></p>
+<h2 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">longestConsecutive</span>(<span class="keyword">_</span> <span class="params">nums</span>: [<span class="type">Int</span>]) -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> num_set <span class="operator">=</span> <span class="type">Set</span>&lt;<span class="type">Int</span>&gt;(nums)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">var</span> longestStreak <span class="operator">=</span> <span class="number">0</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> num <span class="keyword">in</span> num_set &#123;</span><br><span class="line">            <span class="keyword">if</span> <span class="operator">!</span>num_set.contains(num <span class="operator">-</span> <span class="number">1</span>) &#123;</span><br><span class="line">                <span class="keyword">var</span> currentStreak <span class="operator">=</span> <span class="number">1</span></span><br><span class="line">                <span class="keyword">var</span> currentNum <span class="operator">=</span> num</span><br><span class="line">                </span><br><span class="line">                <span class="keyword">while</span> num_set.contains(currentNum <span class="operator">+</span> <span class="number">1</span>) &#123;</span><br><span class="line">                    currentNum <span class="operator">=</span> currentNum <span class="operator">+</span> <span class="number">1</span></span><br><span class="line">                    currentStreak <span class="operator">+=</span> <span class="number">1</span></span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">                longestStreak <span class="operator">=</span> <span class="built_in">max</span>(longestStreak, currentStreak)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> longestStreak</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://illusorycat.github.io/2024/05/23/Swift-Algorithm-1-Hash/" data-id="clwipfqi0000dkrqe2k3w23qv" data-title="Swift 算法-1-哈希" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Swift-%E7%AE%97%E6%B3%95/" rel="tag">Swift, 算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2024/05/20/Start-with-Flutter-%E2%85%A0/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">Flutter 入门指引 Ⅰ</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swift-%E7%AE%97%E6%B3%95/" rel="tag">Swift, 算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BB%A3%E7%A0%81%E4%BA%BA%E7%94%9F/" rel="tag">代码人生</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%AD%E6%B3%95/" rel="tag">语法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Swift-%E7%AE%97%E6%B3%95/" style="font-size: 10px;">Swift, 算法</a> <a href="/tags/%E4%BB%A3%E7%A0%81%E4%BA%BA%E7%94%9F/" style="font-size: 10px;">代码人生</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 20px;">工具</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E8%AF%AD%E6%B3%95/" style="font-size: 15px;">语法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">五月 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/05/23/Swift-Algorithm-1-Hash/">Swift 算法-1-哈希</a>
+          </li>
+        
+          <li>
+            <a href="/2024/05/20/Start-with-Flutter-%E2%85%A0/">Flutter 入门指引 Ⅰ</a>
+          </li>
+        
+          <li>
+            <a href="/2024/05/20/Dart-brief/">Dart 简述</a>
+          </li>
+        
+          <li>
+            <a href="/2024/05/20/Beyond-Compare-probation/">Beyond Compare 试用期</a>
+          </li>
+        
+          <li>
+            <a href="/2024/05/20/Compile-FFMPEG-on-Windows/">Windows 下编译 FFMPEG</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 Illusory<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

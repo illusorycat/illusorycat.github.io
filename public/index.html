@@ -93,25 +93,25 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><p><a href="#1">前言</a><br><a href="#2">两数之和</a><br><a href="#3">字母异位词分组</a><br><a href="#4">最长连续序列</a></p>
-<h1 id="1">前言</h1>
+        <h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><p><a href="#0">前言</a><br><a href="#1">两数之和</a><br><a href="#49">字母异位词分组</a><br><a href="#128">最长连续序列</a></p>
+<h1 id="0">前言</h1>
 
 <p>本文题目来源 LeetCode ，主要用于记录笔者的一些解题思路和思考。<br><br>本文的主题是哈希。<br></p>
-<h1 id="2">两数之和</h1>
+<h1 id="1">两数之和</h1>
 
 <p>LeetCode 1. 两数之和<br></p>
 <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一个整数数组 nums 和一个整数目标值 target，请你在该数组中找出 和为目标值 target  的那 两个 整数，并返回它们的数组下标。<br><br>你可以假设每种输入只会对应一个答案。但是，数组中同一个元素在答案里不能重复出现。<br><br>你可以按任意顺序返回答案。<br></p>
 <h2 id="解题思考"><a href="#解题思考" class="headerlink" title="解题思考"></a>解题思考</h2><p>题目中提到了可以假定每种输入只会对应一个答案，因此我们找到答案后立即返回。<br><br>题目要求每个元素只能使用一次，但是并没有说元素的值是否会重复。不过只本题中只有前者条件是有意义的。<br><br>暴力解法，遍历数组中的所有元素 <code>x</code> ，同时遍历剩余的元素 <code>y</code> ，判断 <code>x + y == target</code> 。<br><br>优化解法，在遍历数组元素 <code>x</code> 时，查找是否存在 <code>target - y</code> 。同时在编译时将元素 <code>x</code> 与它的下标 <code>index</code> 插入哈希表保存。<br></p>
 <h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">twoSum</span>(<span class="keyword">_</span> <span class="params">nums</span>: [<span class="type">Int</span>], <span class="keyword">_</span> <span class="params">target</span>: <span class="type">Int</span>) -&gt; [<span class="type">Int</span>] &#123;</span><br><span class="line">        <span class="keyword">var</span> hashtable <span class="operator">=</span> [<span class="type">Int</span>: <span class="type">Int</span>]()</span><br><span class="line">        <span class="keyword">for</span> (i, e) <span class="keyword">in</span> nums.enumerated() &#123;</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">let</span> v <span class="operator">=</span> hashtable[target <span class="operator">-</span> e] &#123;</span><br><span class="line">                <span class="keyword">return</span> [i, v]</span><br><span class="line">            &#125;</span><br><span class="line">            hashtable[e] <span class="operator">=</span> i</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> []</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h1 id="3">字母异位词分组</h1>
+<h1 id="49">字母异位词分组</h1>
 
 <p>LeetCode 49. 字母异位词分组<br></p>
 <h2 id="题目-1"><a href="#题目-1" class="headerlink" title="题目"></a>题目</h2><p>给你一个字符串数组，请你将<strong>字母异位词</strong>组合在一起。可以按任意顺序返回结果列表。<br><br>字母异位词是由重新排列源单词的所有字母得到的一个新单词。<br></p>
 <h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>字母异位词指两个字符串中，字母值和数量一致。<br><br>因此我们需要考虑怎么怎么表示一组字母异位词，最简单的方法就是用字符串的字典序字符串来表示.然后使用哈希表存储，最后再转换成数组输出。<br></p>
 <h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">groupAnagrams</span>(<span class="keyword">_</span> <span class="params">strs</span>: [<span class="type">String</span>]) -&gt; [[<span class="type">String</span>]] &#123;</span><br><span class="line">        <span class="keyword">var</span> hashList <span class="operator">=</span> [<span class="type">String</span>: [<span class="type">String</span>]]()</span><br><span class="line">        <span class="keyword">for</span> str <span class="keyword">in</span> strs &#123;</span><br><span class="line">            <span class="keyword">let</span> key <span class="operator">=</span> <span class="type">String</span>(str.sorted())</span><br><span class="line">            <span class="keyword">if</span> hashList[key] <span class="operator">==</span> <span class="literal">nil</span> &#123;</span><br><span class="line">                hashList[key] <span class="operator">=</span> [str]</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                hashList[key]<span class="operator">!</span>.append(str)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="type">Array</span>(hashList.values)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h1 id="4">最长连续序列</h1>
+<h1 id="128">最长连续序列</h1>
 
 <p>LeetCode 128. 最长连续序列<br></p>
 <h2 id="题目-2"><a href="#题目-2" class="headerlink" title="题目"></a>题目</h2><p>给定一个未排序的整数数组 nums ，找出数字连续的最长序列（不要求序列元素在原数组中连续）的长度。<br><br>请你设计并实现时间复杂度为 O(n) 的算法解决此问题。<br></p>
@@ -120,7 +120,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://illusorycat.github.io/2024/05/23/Swift-Algorithm-1-Hash/" data-id="clwizwesc000e5rqe52hqcdgv" data-title="Swift 算法-1-哈希" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://illusorycat.github.io/2024/05/23/Swift-Algorithm-1-Hash/" data-id="clwolzpzu000m36qe6r3t7c0h" data-title="Swift 算法-1-哈希" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -208,7 +208,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://illusorycat.github.io/2024/05/20/Start-with-Flutter-%E2%85%A0/" data-id="clwizwesc000b5rqedsfeg5xb" data-title="Flutter 入门指引 Ⅰ" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://illusorycat.github.io/2024/05/20/Start-with-Flutter-%E2%85%A0/" data-id="clwolzpzs000c36qe78xi210r" data-title="Flutter 入门指引 Ⅰ" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -567,7 +567,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://illusorycat.github.io/2024/05/20/Dart-brief/" data-id="clwizwesb00065rqeaozgc6or" data-title="Dart 简述" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://illusorycat.github.io/2024/05/20/Dart-brief/" data-id="clwolzpzr000636qee2m0g1dt" data-title="Dart 简述" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -639,7 +639,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://illusorycat.github.io/2024/05/20/Beyond-Compare-probation/" data-id="clwizwes800015rqecq7546dj" data-title="Beyond Compare 试用期" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://illusorycat.github.io/2024/05/20/Beyond-Compare-probation/" data-id="clwolzpzp000236qebrxg0q70" data-title="Beyond Compare 试用期" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -739,7 +739,7 @@ msys2_shell.cmd
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://illusorycat.github.io/2024/05/20/Compile-FFMPEG-on-Windows/" data-id="clwizwesa00045rqe94x77g82" data-title="Windows 下编译 FFMPEG" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://illusorycat.github.io/2024/05/20/Compile-FFMPEG-on-Windows/" data-id="clwolzpzq000536qefmi9c0li" data-title="Windows 下编译 FFMPEG" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -807,7 +807,7 @@ msys2_shell.cmd
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://illusorycat.github.io/2024/05/20/Hexo-environment-configuration/" data-id="clwizwesa00055rqe4yvd34x4" data-title="Hexo 环境配置" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://illusorycat.github.io/2024/05/20/Hexo-environment-configuration/" data-id="clwolzpzr000736qe48595388" data-title="Hexo 环境配置" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -867,7 +867,7 @@ msys2_shell.cmd
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://illusorycat.github.io/2024/05/20/Build-gallery-with-PicGo/" data-id="clwizwes900025rqegso89mkp" data-title="使用 PicGo 搭建图床" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://illusorycat.github.io/2024/05/20/Build-gallery-with-PicGo/" data-id="clwolzpzq000336qeepq91eeu" data-title="使用 PicGo 搭建图床" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -1190,7 +1190,7 @@ msys2_shell.cmd
 <pre><code>&lt;https://markdown.com.cn&gt;
 &lt;fake@example.com&gt;
 </code></pre>
-<p>渲染效果如下：<br><br><a target="_blank" rel="noopener" href="https://markdown.com.cn/">https://markdown.com.cn</a><br><a href="mailto:&#102;&#x61;&#107;&#101;&#64;&#101;&#120;&#97;&#x6d;&#112;&#108;&#x65;&#46;&#99;&#111;&#109;">&#102;&#x61;&#107;&#101;&#64;&#101;&#120;&#97;&#x6d;&#112;&#108;&#x65;&#46;&#99;&#111;&#109;</a></p>
+<p>渲染效果如下：<br><br><a target="_blank" rel="noopener" href="https://markdown.com.cn/">https://markdown.com.cn</a><br><a href="mailto:&#x66;&#x61;&#x6b;&#101;&#64;&#101;&#120;&#97;&#x6d;&#112;&#108;&#x65;&#46;&#x63;&#x6f;&#x6d;">&#x66;&#x61;&#x6b;&#101;&#64;&#101;&#120;&#97;&#x6d;&#112;&#108;&#x65;&#46;&#x63;&#x6f;&#x6d;</a></p>
 <h4 id="带格式的链接"><a href="#带格式的链接" class="headerlink" title="带格式的链接"></a>带格式的链接</h4><p>你可以使用一些格式强调你的链接，比如粗体和斜体。<br></p>
 <pre><code>I love supporting the **[EFF](https://eff.org)**.
 I love supporting the *[EFF](https://eff.org)*.
@@ -1370,7 +1370,7 @@ Second Term
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://illusorycat.github.io/2024/05/20/Markdown-brief/" data-id="clwizwesc00095rqefb3k3wcz" data-title="Markdown 简述" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://illusorycat.github.io/2024/05/20/Markdown-brief/" data-id="clwolzpzs000a36qefwzgcct9" data-title="Markdown 简述" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       

@@ -71,6 +71,78 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Swift-Algorithm-2-DoublePointer" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/05/25/Swift-Algorithm-2-DoublePointer/" class="article-date">
+  <time class="dt-published" datetime="2024-05-25T10:19:14.000Z" itemprop="datePublished">2024-05-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/05/25/Swift-Algorithm-2-DoublePointer/">Swift 算法-1-双指针</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><p><a href="#0">前言</a><br><a href="#283">移动零</a><br><a href="#11">盛最多水的容器</a><br><a href="#15">三数之和</a><br><a href="#42">接雨水</a></p>
+<h1 id="0">前言</h1>
+
+<p>本文题目来源 LeetCode ，主要用于记录笔者的一些解题思路和思考。<br><br>本文的主题是双指针。<br></p>
+<h1 id="283">移动零</h1>
+
+<p>LeetCode 283. 移动零<br></p>
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。<br><br>请注意 ，必须在不复制数组的情况下原地对数组进行操作。<br></p>
+<h2 id="解题思考"><a href="#解题思考" class="headerlink" title="解题思考"></a>解题思考</h2><p>最直接的思路，遍历数组，遇到 0 时，使用冒泡法将 0 交换到数组末尾。使用冒泡是为了保存非零元素的相对顺序。<br><br>但是上述的时间复杂度是 O($n^2$)。<br><br>事实上，我们可以先找到数组中第一个 0 的位置，然后使用指针 1 指向零区间的头部，使用指针 2 指向零区间之后的第一个位置，表示零区间的尾部。这样子我们就形成了一个零区间。<br><br>然后从零区间尾部开始遍历。当找到 0 时，纳入零区间。当找到非零值时，将其与零区域的第一个元素交换，也就等价于移动零区间。<br></p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">moveZeroes</span>(<span class="keyword">_</span> <span class="params">nums</span>: <span class="keyword">inout</span> [<span class="type">Int</span>]) &#123;</span><br><span class="line">        <span class="keyword">var</span> zeroBegin <span class="operator">=</span> nums.firstIndex(of: <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">guard</span> <span class="keyword">var</span> zeroBegin <span class="keyword">else</span> &#123; <span class="keyword">return</span> &#125;</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> (zeroBegin <span class="operator">+</span> <span class="number">1</span>)<span class="operator">..&lt;</span>nums.count &#123;</span><br><span class="line">            <span class="keyword">if</span> nums[i] <span class="operator">!=</span> <span class="number">0</span> &#123;</span><br><span class="line">                nums.swapAt(zeroBegin, i)</span><br><span class="line">                zeroBegin <span class="operator">+=</span> <span class="number">1</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="11">盛最多水的容器</h1>
+
+<p>LeetCode 11. 盛最多水的容器<br></p>
+<h2 id="题目-1"><a href="#题目-1" class="headerlink" title="题目"></a>题目</h2><p>给定一个长度为 n 的整数数组 height 。有 n 条垂线，第 i 条线的两个端点是 (i, 0) 和 (i, height[i]) 。<br><br>找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。<br><br>返回容器可以储存的最大水量。<br><br>说明：你不能倾斜容器。<br><br>示例图如下：<br><br><img src="https://raw.githubusercontent.com/illusorycat/MyPictureBase/main/image/202405271346208.png"></p>
+<h2 id="解题思考-1"><a href="#解题思考-1" class="headerlink" title="解题思考"></a>解题思考</h2><p>使用一个变量 maxArea 存储可能的最大水量。<br><br>第一个可能的最大水量的第0条线 left 和最后一条线 right 组成的区域。最大水量公式是<br><br>$$maxArea &#x3D; min(height[left], height[right]) * (right - left)$$<br><br>之后，不管是移动左指针还是移动右指针，其底边总是在缩短，所以最大水量如果能更大，只能是高在增大。<br><br>对于高而已，受到 height[left] 和 height[right] 其中更小值的制约。所以是移动指向更小值的那个指针。<br></p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">maxArea</span>(<span class="keyword">_</span> <span class="params">height</span>: [<span class="type">Int</span>]) -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> left <span class="operator">=</span> <span class="number">0</span></span><br><span class="line">        <span class="keyword">var</span> right <span class="operator">=</span> height.count <span class="operator">-</span> <span class="number">1</span></span><br><span class="line">        <span class="keyword">var</span> maxArea <span class="operator">=</span> <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span> left <span class="operator">&lt;</span> right &#123;</span><br><span class="line">            <span class="keyword">let</span> curArea <span class="operator">=</span> <span class="built_in">min</span>(height[left], height[right]) <span class="operator">*</span> (right <span class="operator">-</span> left)</span><br><span class="line">            maxArea <span class="operator">=</span> <span class="built_in">max</span>(curArea, maxArea)</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> height[left] <span class="operator">&lt;</span> height [right] &#123;</span><br><span class="line">                left <span class="operator">+=</span> <span class="number">1</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                right <span class="operator">-=</span> <span class="number">1</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> maxArea</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="15">三数之和</h1>
+
+<p>LeetCode 15. 三数之和<br></p>
+<h2 id="题目-2"><a href="#题目-2" class="headerlink" title="题目"></a>题目</h2><p>给你一个整数数组 nums ，判断是否存在三元组 [nums[i], nums[j], nums[k]] 满足 i !&#x3D; j、i !&#x3D; k 且 j !&#x3D; k ，同时还满足 nums[i] + nums[j] + nums[k] &#x3D;&#x3D; 0 。请<br><br>你返回所有和为 0 且不重复的三元组。<br><br>注意：答案中不可以包含重复的三元组。<br></p>
+<h2 id="解题思考-2"><a href="#解题思考-2" class="headerlink" title="解题思考"></a>解题思考</h2><p>寻找三元组，先固定一个 i， 问题就可以简化为两数之和问题。但是，这儿的两数之和需要找出所有的可能性。<br><br>使用双指针 + 排序。首先对数组做递增排序。然后使用双指针，一个 left ， 一个 right 。如果 $nums[left] + nums[right] + nums[i] &#x3D;&#x3D; 0$ ，则找到一个三元组。如果 $&gt;0$ ，则 $right -&#x3D; 1$ ，如果 $&lt;0$ ，则 $left +&#x3D; 1$ 。<br><br>同时，题目要求不能包含重复的三元组，因此 $+&#x3D; 1$ 一类的操作都要换成找到下一个不重复的元素。<br><br>同时，数组已经是递增的了，有一个优化操作，当 n</p>
+<h2 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">threeSum</span>(<span class="keyword">_</span> <span class="params">nums</span>: [<span class="type">Int</span>]) -&gt; [[<span class="type">Int</span>]] &#123;</span><br><span class="line">        <span class="keyword">var</span> ans <span class="operator">=</span> [[<span class="type">Int</span>]]()</span><br><span class="line">        <span class="keyword">let</span> nums_sorted <span class="operator">=</span> nums.sorted()</span><br><span class="line">        <span class="keyword">var</span> count <span class="operator">=</span> nums_sorted.count</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">0</span><span class="operator">..&lt;</span>count <span class="operator">-</span> <span class="number">2</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> i <span class="operator">==</span> <span class="number">0</span> <span class="operator">||</span> nums_sorted[i] <span class="operator">!=</span> nums_sorted[i <span class="operator">-</span> <span class="number">1</span>] &#123;</span><br><span class="line">                <span class="keyword">var</span> left <span class="operator">=</span> i <span class="operator">+</span> <span class="number">1</span></span><br><span class="line">                <span class="keyword">var</span> right <span class="operator">=</span> count <span class="operator">-</span> <span class="number">1</span></span><br><span class="line">                <span class="keyword">while</span> left <span class="operator">&lt;</span> right &#123;</span><br><span class="line">                    <span class="keyword">let</span> sum <span class="operator">=</span> nums_sorted[i] <span class="operator">+</span> nums_sorted[left] <span class="operator">+</span> nums_sorted[right]</span><br><span class="line">                    </span><br><span class="line">                    <span class="keyword">if</span> sum <span class="operator">==</span> <span class="number">0</span> &#123;</span><br><span class="line">                        ans.append([nums_sorted[i], nums_sorted[left], nums_sorted[right]])</span><br><span class="line"></span><br><span class="line">                        <span class="keyword">repeat</span> &#123;</span><br><span class="line">                            left <span class="operator">+=</span> <span class="number">1</span></span><br><span class="line">                        &#125; <span class="keyword">while</span> left <span class="operator">&lt;</span> right <span class="operator">&amp;&amp;</span> nums_sorted[left] <span class="operator">==</span> nums_sorted[left <span class="operator">-</span> <span class="number">1</span>]</span><br><span class="line">                        <span class="keyword">repeat</span> &#123;</span><br><span class="line">                            right <span class="operator">-=</span> <span class="number">1</span></span><br><span class="line">                        &#125; <span class="keyword">while</span> left <span class="operator">&lt;</span> right <span class="operator">&amp;&amp;</span> nums_sorted[right] <span class="operator">==</span> nums_sorted[right <span class="operator">+</span> <span class="number">1</span>]</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">else</span> <span class="keyword">if</span> sum <span class="operator">&gt;</span> <span class="number">0</span> &#123;</span><br><span class="line">                        <span class="keyword">repeat</span> &#123;</span><br><span class="line">                            right <span class="operator">-=</span> <span class="number">1</span></span><br><span class="line">                        &#125; <span class="keyword">while</span> left <span class="operator">&lt;</span> right <span class="operator">&amp;&amp;</span> nums_sorted[right] <span class="operator">==</span> nums_sorted[right <span class="operator">+</span> <span class="number">1</span>]</span><br><span class="line">                    &#125; </span><br><span class="line">                    <span class="keyword">else</span> &#123;</span><br><span class="line">                        <span class="keyword">repeat</span> &#123;</span><br><span class="line">                            left <span class="operator">+=</span> <span class="number">1</span></span><br><span class="line">                        &#125; <span class="keyword">while</span> left <span class="operator">&lt;</span> right <span class="operator">&amp;&amp;</span> nums_sorted[left] <span class="operator">==</span> nums_sorted[left <span class="operator">-</span> <span class="number">1</span>]</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="42">接雨水</h1>
+
+<p>LeetCode 42. 接雨水<br></p>
+<h2 id="题目-3"><a href="#题目-3" class="headerlink" title="题目"></a>题目</h2><p>给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。<br><br>示例图如下：<br><br><img src="https://raw.githubusercontent.com/illusorycat/MyPictureBase/main/image/202405271426890.png"></p>
+<h2 id="解题思考-3"><a href="#解题思考-3" class="headerlink" title="解题思考"></a>解题思考</h2><p>使用双指针 left 和 right 。因为容量的限制因素是 $min(height[left], height[right])$ ，因此移动指向较小值的指针。<br><br>保存一个 leftMax 和 rightMax ，如果 $height[left] &lt; height[right]$ , 则必有 $leftMax &lt; rightMax$ ,那么 left 处可以存储的雨水量为 $leftMax - height[left]$，反之必然。因为我们移动指向较小值的指针。<br><br>同时使用 height[left] 和 height[right] 去更新 leftMax 和 rightMax 。<br></p>
+<h2 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">trap</span>(<span class="keyword">_</span> <span class="params">height</span>: [<span class="type">Int</span>]) -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> height.isEmpty &#123; <span class="keyword">return</span> <span class="number">0</span> &#125;</span><br><span class="line">        <span class="keyword">var</span> left <span class="operator">=</span> <span class="number">0</span></span><br><span class="line">        <span class="keyword">var</span> right <span class="operator">=</span> height.count <span class="operator">-</span> <span class="number">1</span></span><br><span class="line">        <span class="keyword">var</span> leftMax <span class="operator">=</span> height[left]</span><br><span class="line">        <span class="keyword">var</span> rightMax <span class="operator">=</span> height[right]</span><br><span class="line">        <span class="keyword">var</span> capcity <span class="operator">=</span> <span class="number">0</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> left <span class="operator">&lt;</span> right &#123;</span><br><span class="line">            <span class="keyword">if</span> height[left] <span class="operator">&lt;</span> height[right] &#123;</span><br><span class="line">                capcity <span class="operator">+=</span> leftMax <span class="operator">-</span> height[left]</span><br><span class="line">                left <span class="operator">+=</span> <span class="number">1</span></span><br><span class="line">                leftMax <span class="operator">=</span> <span class="built_in">max</span>(leftMax, height[left])</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                capcity <span class="operator">+=</span> rightMax <span class="operator">-</span> height[right]</span><br><span class="line">                right <span class="operator">-=</span> <span class="number">1</span></span><br><span class="line">                rightMax <span class="operator">=</span> <span class="built_in">max</span>(rightMax, height[right])</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> capcity</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="解法拓展"><a href="#解法拓展" class="headerlink" title="解法拓展"></a>解法拓展</h2><p>本题还可以使用动态规划来实现。从双指针的解法来看，下标 i 处可以存储的雨水量取决于 i 处临近的左右两边最大值中的最小值。<br><br>我们可以使用两个数组 leftMax 和 rightMax 分别存储下标 i 处的左边最大值和右边最大值。<br><br>在建立 leftMax 和 rightMax 时就可以使用动态规划来。<br></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">trap</span>(<span class="keyword">_</span> <span class="params">height</span>: [<span class="type">Int</span>]) -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> height.isEmpty &#123; <span class="keyword">return</span> <span class="number">0</span> &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">var</span> leftMax <span class="operator">=</span> <span class="type">Array</span>(repeating: <span class="number">0</span>, count: height.count)</span><br><span class="line">        leftMax[<span class="number">0</span>] <span class="operator">=</span> height[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">1</span><span class="operator">..&lt;</span>height.count &#123;</span><br><span class="line">            leftMax[i] <span class="operator">=</span> <span class="built_in">max</span>(height[i], leftMax[i <span class="operator">-</span> <span class="number">1</span>])</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">var</span> rightMax <span class="operator">=</span> <span class="type">Array</span>(repeating: <span class="number">0</span>, count: height.count)</span><br><span class="line">        rightMax[rightMax.count <span class="operator">-</span> <span class="number">1</span>] <span class="operator">=</span> height[height.count <span class="operator">-</span> <span class="number">1</span>]</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">stride</span>(from: height.count <span class="operator">-</span> <span class="number">2</span>, through: <span class="number">0</span>, by: <span class="operator">-</span><span class="number">1</span>) &#123;</span><br><span class="line">            rightMax[i] <span class="operator">=</span> <span class="built_in">max</span>(height[i], rightMax[i <span class="operator">+</span> <span class="number">1</span>])</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">var</span> capcity <span class="operator">=</span> <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">0</span><span class="operator">..&lt;</span>height.count &#123;</span><br><span class="line">            capcity <span class="operator">+=</span> <span class="built_in">min</span>(leftMax[i], rightMax[i]) <span class="operator">-</span> height[i]</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> capcity</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://illusorycat.github.io/2024/05/25/Swift-Algorithm-2-DoublePointer/" data-id="clwom2biz000f6bqe34s2dfw4" data-title="Swift 算法-1-双指针" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Swift-%E7%AE%97%E6%B3%95/" rel="tag">Swift, 算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Swift-Algorithm-1-Hash" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2024/05/23/Swift-Algorithm-1-Hash/" class="article-date">
@@ -120,7 +192,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://illusorycat.github.io/2024/05/23/Swift-Algorithm-1-Hash/" data-id="clwolzpzu000m36qe6r3t7c0h" data-title="Swift 算法-1-哈希" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://illusorycat.github.io/2024/05/23/Swift-Algorithm-1-Hash/" data-id="clwom2biy000e6bqe1q3ch2br" data-title="Swift 算法-1-哈希" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -208,7 +280,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://illusorycat.github.io/2024/05/20/Start-with-Flutter-%E2%85%A0/" data-id="clwolzpzs000c36qe78xi210r" data-title="Flutter 入门指引 Ⅰ" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://illusorycat.github.io/2024/05/20/Start-with-Flutter-%E2%85%A0/" data-id="clwom2biy000b6bqe4skifexu" data-title="Flutter 入门指引 Ⅰ" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -567,7 +639,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://illusorycat.github.io/2024/05/20/Dart-brief/" data-id="clwolzpzr000636qee2m0g1dt" data-title="Dart 简述" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://illusorycat.github.io/2024/05/20/Dart-brief/" data-id="clwom2biw00056bqe1mx6hwfl" data-title="Dart 简述" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -639,7 +711,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://illusorycat.github.io/2024/05/20/Beyond-Compare-probation/" data-id="clwolzpzp000236qebrxg0q70" data-title="Beyond Compare 试用期" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://illusorycat.github.io/2024/05/20/Beyond-Compare-probation/" data-id="clwom2biv00016bqe2uyq7l8o" data-title="Beyond Compare 试用期" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -739,7 +811,7 @@ msys2_shell.cmd
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://illusorycat.github.io/2024/05/20/Compile-FFMPEG-on-Windows/" data-id="clwolzpzq000536qefmi9c0li" data-title="Windows 下编译 FFMPEG" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://illusorycat.github.io/2024/05/20/Compile-FFMPEG-on-Windows/" data-id="clwom2biw00046bqe0cde9ek3" data-title="Windows 下编译 FFMPEG" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -807,7 +879,7 @@ msys2_shell.cmd
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://illusorycat.github.io/2024/05/20/Hexo-environment-configuration/" data-id="clwolzpzr000736qe48595388" data-title="Hexo 环境配置" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://illusorycat.github.io/2024/05/20/Hexo-environment-configuration/" data-id="clwom2bix00066bqebgvb3prz" data-title="Hexo 环境配置" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -867,7 +939,7 @@ msys2_shell.cmd
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://illusorycat.github.io/2024/05/20/Build-gallery-with-PicGo/" data-id="clwolzpzq000336qeepq91eeu" data-title="使用 PicGo 搭建图床" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://illusorycat.github.io/2024/05/20/Build-gallery-with-PicGo/" data-id="clwom2biv00026bqeaetceclv" data-title="使用 PicGo 搭建图床" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -1190,7 +1262,7 @@ msys2_shell.cmd
 <pre><code>&lt;https://markdown.com.cn&gt;
 &lt;fake@example.com&gt;
 </code></pre>
-<p>渲染效果如下：<br><br><a target="_blank" rel="noopener" href="https://markdown.com.cn/">https://markdown.com.cn</a><br><a href="mailto:&#x66;&#x61;&#x6b;&#101;&#64;&#101;&#120;&#97;&#x6d;&#112;&#108;&#x65;&#46;&#x63;&#x6f;&#x6d;">&#x66;&#x61;&#x6b;&#101;&#64;&#101;&#120;&#97;&#x6d;&#112;&#108;&#x65;&#46;&#x63;&#x6f;&#x6d;</a></p>
+<p>渲染效果如下：<br><br><a target="_blank" rel="noopener" href="https://markdown.com.cn/">https://markdown.com.cn</a><br><a href="mailto:&#102;&#97;&#107;&#101;&#x40;&#x65;&#x78;&#x61;&#x6d;&#112;&#x6c;&#101;&#46;&#x63;&#111;&#x6d;">&#102;&#97;&#107;&#101;&#x40;&#x65;&#x78;&#x61;&#x6d;&#112;&#x6c;&#101;&#46;&#x63;&#111;&#x6d;</a></p>
 <h4 id="带格式的链接"><a href="#带格式的链接" class="headerlink" title="带格式的链接"></a>带格式的链接</h4><p>你可以使用一些格式强调你的链接，比如粗体和斜体。<br></p>
 <pre><code>I love supporting the **[EFF](https://eff.org)**.
 I love supporting the *[EFF](https://eff.org)*.
@@ -1370,7 +1442,7 @@ Second Term
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://illusorycat.github.io/2024/05/20/Markdown-brief/" data-id="clwolzpzs000a36qefwzgcct9" data-title="Markdown 简述" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://illusorycat.github.io/2024/05/20/Markdown-brief/" data-id="clwom2biy00096bqe1n3wenf1" data-title="Markdown 简述" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -1407,7 +1479,7 @@ Second Term
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Swift-%E7%AE%97%E6%B3%95/" style="font-size: 10px;">Swift, 算法</a> <a href="/tags/%E4%BB%A3%E7%A0%81%E4%BA%BA%E7%94%9F/" style="font-size: 10px;">代码人生</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 20px;">工具</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E8%AF%AD%E6%B3%95/" style="font-size: 15px;">语法</a>
+      <a href="/tags/Swift-%E7%AE%97%E6%B3%95/" style="font-size: 15px;">Swift, 算法</a> <a href="/tags/%E4%BB%A3%E7%A0%81%E4%BA%BA%E7%94%9F/" style="font-size: 10px;">代码人生</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 20px;">工具</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E8%AF%AD%E6%B3%95/" style="font-size: 15px;">语法</a>
     </div>
   </div>
 
@@ -1429,6 +1501,10 @@ Second Term
       <ul>
         
           <li>
+            <a href="/2024/05/25/Swift-Algorithm-2-DoublePointer/">Swift 算法-1-双指针</a>
+          </li>
+        
+          <li>
             <a href="/2024/05/23/Swift-Algorithm-1-Hash/">Swift 算法-1-哈希</a>
           </li>
         
@@ -1442,10 +1518,6 @@ Second Term
         
           <li>
             <a href="/2024/05/20/Beyond-Compare-probation/">Beyond Compare 试用期</a>
-          </li>
-        
-          <li>
-            <a href="/2024/05/20/Compile-FFMPEG-on-Windows/">Windows 下编译 FFMPEG</a>
           </li>
         
       </ul>

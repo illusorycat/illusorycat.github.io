@@ -71,6 +71,63 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Swift-Algorithm-3-SlidingWindow" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/05/28/Swift-Algorithm-3-SlidingWindow/" class="article-date">
+  <time class="dt-published" datetime="2024-05-28T02:23:46.000Z" itemprop="datePublished">2024-05-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/05/28/Swift-Algorithm-3-SlidingWindow/">Swift 算法-3-滑动窗口</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><p><a href="#0">前言</a><br><a href="#3">无重复字符的最长子串</a><br><a href="#438">找到字符串中所有字母异位词</a></p>
+<h1 id="0">前言</h1>
+
+<p>本文题目来源 LeetCode ，主要用于记录笔者的一些解题思路和思考。<br><br>本文的主题是滑动窗口。<br></p>
+<h1 id="3">无重复字符的最长子串</h1>
+
+<p>LeetCode 3. 无重复字符的最长子串<br></p>
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一个字符串 s ，请你找出其中不含有重复字符的 最长子串的长度。<br></p>
+<h2 id="解题思考"><a href="#解题思考" class="headerlink" title="解题思考"></a>解题思考</h2><p>使用一个滑动窗口[left, right]。右移 right 指针遍历字符串，使用哈希表记录字母的下标。当遇到重复字母时，判断前一个位置 prev 是否在滑动窗口中，如果是，移动 left 指针到 prev + 1 。<br><br>遍历过程中实时更新滑动窗口长度和最长子串长度。<br></p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">lengthOfLongestSubstring</span>(<span class="keyword">_</span> <span class="params">s</span>: <span class="type">String</span>) -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> hashTable <span class="operator">=</span> [<span class="type">Character</span>: <span class="type">Int</span>]()</span><br><span class="line">        <span class="keyword">var</span> maxLen <span class="operator">=</span> <span class="number">0</span></span><br><span class="line">        <span class="keyword">var</span> left <span class="operator">=</span> <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> (i, c) <span class="keyword">in</span> s.enumerated() &#123;</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">let</span> index <span class="operator">=</span> hashTable[c] &#123;</span><br><span class="line">                left <span class="operator">=</span> <span class="built_in">max</span>(left, index <span class="operator">+</span> <span class="number">1</span>)</span><br><span class="line">            &#125;</span><br><span class="line">            maxLen <span class="operator">=</span> <span class="built_in">max</span>(maxLen, i <span class="operator">-</span> left <span class="operator">+</span> <span class="number">1</span>)</span><br><span class="line">            hashTable[c] <span class="operator">=</span> i</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> maxLen</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="438">找到字符串中所有字母异位词</h1>
+
+<p>LeetCode 438. 找到字符串中所有字母异位词<br></p>
+<h2 id="题目-1"><a href="#题目-1" class="headerlink" title="题目"></a>题目</h2><p>给定两个字符串 s 和 p，找到 s 中所有 p 的 异位词 的子串，返回这些子串的起始索引。不考虑答案输出的顺序。<br><br>异位词 指由相同字母重排列形成的字符串（包括相同的字符串）。<br></p>
+<h2 id="解题思考-1"><a href="#解题思考-1" class="headerlink" title="解题思考"></a>解题思考</h2><p>字符串 p 的长度 pLen 是固定的，所以就是遍历字符串 s ，取出其中长度为 pLen 的子串判断与字符串 p 是不是字母异位词。这就相当于一个定长的滑动窗口。<br><br>重点是如何判断字母异位词。<br><br>在之前哈希题目中，我们判断字母异位词的方法是将字符串排序，字典序一致的是字母异位词。<br><br>但是在这道题中，如果我们每次都截取出子串再排序，未免有些繁琐，并且每个子串直接存在很大的重叠部分，多了很多重复排序。<br><br>因此我们使用一个结构，存储字符串 p 中的字母种类和对应数量。同时使用另一个结构存储字符串 s 中的滑动窗口中的字母种类和对应数量。然后判断是否一致。<br><br>对于上述判断，我们可以使用做差法。字符串 p 中每个字母以 -1 累计。字符串 s 的滑动窗口中每个字母以 +1 累计，移除滑动窗口则 -1 ，移入滑动窗口则 +1 。这样子就将两个结构合并，并且直接累计所有字母种类的差值是否等于零即可以判断是否是字母异位词。<br></p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">findAnagrams</span>(<span class="keyword">_</span> <span class="params">s</span>: <span class="type">String</span>, <span class="keyword">_</span> <span class="params">p</span>: <span class="type">String</span>) -&gt; [<span class="type">Int</span>] &#123;</span><br><span class="line">        <span class="keyword">let</span> asciiA <span class="operator">=</span> <span class="type">Int</span>(<span class="type">Character</span>(<span class="string">&quot;a&quot;</span>).asciiValue<span class="operator">!</span>)</span><br><span class="line">        <span class="keyword">var</span> ans <span class="operator">=</span> [<span class="type">Int</span>]()</span><br><span class="line">        <span class="keyword">let</span> sArray <span class="operator">=</span> s.unicodeScalars.map(&#123;<span class="type">Int</span>(<span class="variable">$0</span>.value) <span class="operator">-</span> asciiA&#125;)</span><br><span class="line">        <span class="keyword">let</span> pArray <span class="operator">=</span> p.unicodeScalars.map(&#123;<span class="type">Int</span>(<span class="variable">$0</span>.value) <span class="operator">-</span> asciiA&#125;)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> sCount <span class="operator">=</span> sArray.count</span><br><span class="line">        <span class="keyword">let</span> pCount <span class="operator">=</span> pArray.count</span><br><span class="line">        <span class="keyword">guard</span> sCount <span class="operator">&gt;=</span> pCount <span class="keyword">else</span> &#123; <span class="keyword">return</span> ans &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> count <span class="operator">=</span> <span class="type">Array</span>(repeating: <span class="number">0</span>, count: <span class="number">26</span>)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">0</span><span class="operator">..&lt;</span>pCount &#123;</span><br><span class="line">            count[sArray[i]] <span class="operator">+=</span> <span class="number">1</span></span><br><span class="line">            count[pArray[i]] <span class="operator">-=</span> <span class="number">1</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> diff <span class="operator">=</span> <span class="number">0</span></span><br><span class="line">        count.forEach(&#123;diff <span class="operator">+=</span> <span class="built_in">abs</span>(<span class="variable">$0</span>)&#125;)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> diff <span class="operator">==</span> <span class="number">0</span> &#123;</span><br><span class="line">            ans.append(<span class="number">0</span>)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> pCount<span class="operator">..&lt;</span>sCount &#123;</span><br><span class="line">            <span class="keyword">if</span> count[sArray[i <span class="operator">-</span> pCount]] <span class="operator">&gt;</span> <span class="number">0</span> &#123;</span><br><span class="line">                diff <span class="operator">-=</span> <span class="number">1</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                diff <span class="operator">+=</span> <span class="number">1</span></span><br><span class="line">            &#125;</span><br><span class="line">            count[sArray[i <span class="operator">-</span> pCount]] <span class="operator">-=</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> count[sArray[i]] <span class="operator">&lt;</span> <span class="number">0</span> &#123;</span><br><span class="line">                diff <span class="operator">-=</span> <span class="number">1</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                diff <span class="operator">+=</span> <span class="number">1</span></span><br><span class="line">            &#125;</span><br><span class="line">            count[sArray[i]] <span class="operator">+=</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> diff <span class="operator">==</span> <span class="number">0</span> &#123;</span><br><span class="line">                ans.append(i <span class="operator">-</span> pCount <span class="operator">+</span> <span class="number">1</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ans</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://illusorycat.github.io/2024/05/28/Swift-Algorithm-3-SlidingWindow/" data-id="clwpulq01000h6wqe8436c63a" data-title="Swift 算法-3-滑动窗口" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Swift-Algorithm-2-DoublePointer" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2024/05/25/Swift-Algorithm-2-DoublePointer/" class="article-date">
@@ -129,11 +186,11 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://illusorycat.github.io/2024/05/25/Swift-Algorithm-2-DoublePointer/" data-id="clwom5nkl000f9hqe30yhgg7q" data-title="Swift 算法-2-双指针" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://illusorycat.github.io/2024/05/25/Swift-Algorithm-2-DoublePointer/" data-id="clwpulq01000f6wqeed34d74k" data-title="Swift 算法-2-双指针" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Swift-%E7%AE%97%E6%B3%95/" rel="tag">Swift, 算法</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
 
     </footer>
   </div>
@@ -192,11 +249,11 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://illusorycat.github.io/2024/05/23/Swift-Algorithm-1-Hash/" data-id="clwom5nkl000e9hqeehev7rwp" data-title="Swift 算法-1-哈希" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://illusorycat.github.io/2024/05/23/Swift-Algorithm-1-Hash/" data-id="clwpulq00000e6wqe1azl0b8h" data-title="Swift 算法-1-哈希" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Swift-%E7%AE%97%E6%B3%95/" rel="tag">Swift, 算法</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
 
     </footer>
   </div>
@@ -280,7 +337,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://illusorycat.github.io/2024/05/20/Start-with-Flutter-%E2%85%A0/" data-id="clwom5nkk000b9hqe0t327p26" data-title="Flutter 入门指引 Ⅰ" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://illusorycat.github.io/2024/05/20/Start-with-Flutter-%E2%85%A0/" data-id="clwpulq00000b6wqehejodjan" data-title="Flutter 入门指引 Ⅰ" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -639,7 +696,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://illusorycat.github.io/2024/05/20/Dart-brief/" data-id="clwom5nkj00059hqe9mvfgz7l" data-title="Dart 简述" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://illusorycat.github.io/2024/05/20/Dart-brief/" data-id="clwpulpzy00066wqecx8idi2s" data-title="Dart 简述" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -711,7 +768,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://illusorycat.github.io/2024/05/20/Beyond-Compare-probation/" data-id="clwom5nkh00019hqe1710fgj5" data-title="Beyond Compare 试用期" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://illusorycat.github.io/2024/05/20/Beyond-Compare-probation/" data-id="clwpulpzw00016wqe40js1hkp" data-title="Beyond Compare 试用期" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -811,7 +868,7 @@ msys2_shell.cmd
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://illusorycat.github.io/2024/05/20/Compile-FFMPEG-on-Windows/" data-id="clwom5nki00049hqeenl2gsq4" data-title="Windows 下编译 FFMPEG" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://illusorycat.github.io/2024/05/20/Compile-FFMPEG-on-Windows/" data-id="clwpulpzy00046wqe3bfohlw7" data-title="Windows 下编译 FFMPEG" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -879,7 +936,7 @@ msys2_shell.cmd
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://illusorycat.github.io/2024/05/20/Hexo-environment-configuration/" data-id="clwom5nkj00069hqehw5uf55b" data-title="Hexo 环境配置" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://illusorycat.github.io/2024/05/20/Hexo-environment-configuration/" data-id="clwpulpzy00056wqe1t103i7v" data-title="Hexo 环境配置" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -939,7 +996,7 @@ msys2_shell.cmd
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://illusorycat.github.io/2024/05/20/Build-gallery-with-PicGo/" data-id="clwom5nki00029hqehp0x9iw9" data-title="使用 PicGo 搭建图床" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://illusorycat.github.io/2024/05/20/Build-gallery-with-PicGo/" data-id="clwpulpzx00026wqe4zqh5tfo" data-title="使用 PicGo 搭建图床" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -1262,7 +1319,7 @@ msys2_shell.cmd
 <pre><code>&lt;https://markdown.com.cn&gt;
 &lt;fake@example.com&gt;
 </code></pre>
-<p>渲染效果如下：<br><br><a target="_blank" rel="noopener" href="https://markdown.com.cn/">https://markdown.com.cn</a><br><a href="mailto:&#102;&#x61;&#x6b;&#x65;&#x40;&#x65;&#x78;&#97;&#109;&#x70;&#108;&#101;&#x2e;&#99;&#x6f;&#x6d;">&#102;&#x61;&#x6b;&#x65;&#x40;&#x65;&#x78;&#97;&#109;&#x70;&#108;&#101;&#x2e;&#99;&#x6f;&#x6d;</a></p>
+<p>渲染效果如下：<br><br><a target="_blank" rel="noopener" href="https://markdown.com.cn/">https://markdown.com.cn</a><br><a href="mailto:&#x66;&#x61;&#107;&#x65;&#64;&#101;&#x78;&#x61;&#x6d;&#112;&#108;&#101;&#46;&#x63;&#111;&#109;">&#x66;&#x61;&#107;&#x65;&#64;&#101;&#x78;&#x61;&#x6d;&#112;&#108;&#101;&#46;&#x63;&#111;&#109;</a></p>
 <h4 id="带格式的链接"><a href="#带格式的链接" class="headerlink" title="带格式的链接"></a>带格式的链接</h4><p>你可以使用一些格式强调你的链接，比如粗体和斜体。<br></p>
 <pre><code>I love supporting the **[EFF](https://eff.org)**.
 I love supporting the *[EFF](https://eff.org)*.
@@ -1442,7 +1499,7 @@ Second Term
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://illusorycat.github.io/2024/05/20/Markdown-brief/" data-id="clwom5nkk00099hqe3tmc5s2x" data-title="Markdown 简述" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://illusorycat.github.io/2024/05/20/Markdown-brief/" data-id="clwpulq0000096wqea9m3aa1r" data-title="Markdown 简述" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -1469,7 +1526,7 @@ Second Term
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swift-%E7%AE%97%E6%B3%95/" rel="tag">Swift, 算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BB%A3%E7%A0%81%E4%BA%BA%E7%94%9F/" rel="tag">代码人生</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%AD%E6%B3%95/" rel="tag">语法</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BB%A3%E7%A0%81%E4%BA%BA%E7%94%9F/" rel="tag">代码人生</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%AD%E6%B3%95/" rel="tag">语法</a></li></ul>
     </div>
   </div>
 
@@ -1479,7 +1536,7 @@ Second Term
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Swift-%E7%AE%97%E6%B3%95/" style="font-size: 15px;">Swift, 算法</a> <a href="/tags/%E4%BB%A3%E7%A0%81%E4%BA%BA%E7%94%9F/" style="font-size: 10px;">代码人生</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 20px;">工具</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E8%AF%AD%E6%B3%95/" style="font-size: 15px;">语法</a>
+      <a href="/tags/%E4%BB%A3%E7%A0%81%E4%BA%BA%E7%94%9F/" style="font-size: 10px;">代码人生</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 20px;">工具</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 20px;">算法</a> <a href="/tags/%E8%AF%AD%E6%B3%95/" style="font-size: 15px;">语法</a>
     </div>
   </div>
 
@@ -1501,6 +1558,10 @@ Second Term
       <ul>
         
           <li>
+            <a href="/2024/05/28/Swift-Algorithm-3-SlidingWindow/">Swift 算法-3-滑动窗口</a>
+          </li>
+        
+          <li>
             <a href="/2024/05/25/Swift-Algorithm-2-DoublePointer/">Swift 算法-2-双指针</a>
           </li>
         
@@ -1514,10 +1575,6 @@ Second Term
         
           <li>
             <a href="/2024/05/20/Dart-brief/">Dart 简述</a>
-          </li>
-        
-          <li>
-            <a href="/2024/05/20/Beyond-Compare-probation/">Beyond Compare 试用期</a>
           </li>
         
       </ul>

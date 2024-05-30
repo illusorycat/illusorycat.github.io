@@ -71,6 +71,72 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Swift-Algorithm-4-Substring" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/05/30/Swift-Algorithm-4-Substring/" class="article-date">
+  <time class="dt-published" datetime="2024-05-30T02:11:33.000Z" itemprop="datePublished">2024-05-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/05/30/Swift-Algorithm-4-Substring/">Swift 算法-4-子串</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><p><a href="#0">前言</a><br><a href="#560">和为 K 的子数组</a><br><a href="#239">滑动窗口最大值</a><br><a href="#76">最小覆盖子串</a></p>
+<h1 id="0">前言</h1>
+
+<p>本文题目来源 LeetCode ，主要用于记录笔者的一些解题思路和思考。<br><br>本文的主题是子串。<br></p>
+<h1 id="560">和为 K 的子数组</h1>
+
+<p>LeetCode 560. 和为 K 的子数组<br></p>
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给你一个整数数组 nums 和一个整数 k ，请你统计并返回 该数组中和为 k 的子数组的个数 。<br><br>子数组是数组中元素的连续非空序列。<br></p>
+<h2 id="解题思考"><a href="#解题思考" class="headerlink" title="解题思考"></a>解题思考</h2><p>像这一类的题目，本质上都是找出子串。那子串有两个标识，一个是子串开头，一个是子串长度。<br><br>我们可以遍历数组 nums ，将其每个元素作为子串开头，再来找出以该元素作为子串开头的所有子串中满足条件的子串。<br></p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">subarraySum</span>(<span class="keyword">_</span> <span class="params">nums</span>: [<span class="type">Int</span>], <span class="keyword">_</span> <span class="params">k</span>: <span class="type">Int</span>) -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> ans <span class="operator">=</span> <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">0</span><span class="operator">..&lt;</span>nums.count &#123;</span><br><span class="line">            <span class="keyword">var</span> sum <span class="operator">=</span> <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> i<span class="operator">..&lt;</span>nums.count &#123;</span><br><span class="line">                sum <span class="operator">+=</span> nums[j]</span><br><span class="line">                <span class="keyword">if</span> sum <span class="operator">==</span> k &#123;</span><br><span class="line">                    ans <span class="operator">+=</span> <span class="number">1</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="拓展解法"><a href="#拓展解法" class="headerlink" title="拓展解法"></a>拓展解法</h2><p>上述遍历的方法的时间复杂度是 O($n^2$)。<br><br>我们可以使用数学来获得另一个解法。<br><br>$$[i…j] &#x3D;&#x3D; k  &#x3D;&gt; [0…j] &#x3D; k + [0…i-1] (0&lt;i \leq j)$$<br>$$[0…j] &#x3D;&#x3D; k (0 &lt;&#x3D; j)$$<br>问题就简化成了计算数组中 $[0…j]$ 的值，然后再判断是否存在与之相等的 $k + [0…i - 1]$ 。我们可以使用哈希表来存储 $[0…j]$ 的值。<br><br>实际上在编写代码时我们一般会使用 $[0…j] - K &#x3D;&#x3D; [0…i - 1]$ ，因此有一种边界情况需要处理，$[0…j] &#x3D;&#x3D; k$ 。这种特殊情况下，是不存在 $[0…i - 1]$ 子串的，所以我们需要在初始化哈希表时对这种情况做处理。<br></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">subarraySum</span>(<span class="keyword">_</span> <span class="params">nums</span>: [<span class="type">Int</span>], <span class="keyword">_</span> <span class="params">k</span>: <span class="type">Int</span>) -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> ans <span class="operator">=</span> <span class="number">0</span></span><br><span class="line">        <span class="keyword">var</span> map <span class="operator">=</span> [<span class="type">Int</span>: <span class="type">Int</span>]()</span><br><span class="line">        map[<span class="number">0</span>] <span class="operator">=</span> <span class="number">1</span></span><br><span class="line">        <span class="keyword">var</span> sum <span class="operator">=</span> <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> num <span class="keyword">in</span> nums &#123;</span><br><span class="line">            sum <span class="operator">+=</span> num</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">let</span> count <span class="operator">=</span> map[sum <span class="operator">-</span> k] &#123;</span><br><span class="line">                ans <span class="operator">+=</span> count</span><br><span class="line">            &#125;</span><br><span class="line">            map[sum] <span class="operator">=</span> (map[sum] <span class="operator">??</span> <span class="number">0</span>) <span class="operator">+</span> <span class="number">1</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="239">滑动窗口最大值</h1>
+
+<p>LeetCode 239. 滑动窗口最大值<br></p>
+<h2 id="题目-1"><a href="#题目-1" class="headerlink" title="题目"></a>题目</h2><p>给你一个整数数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。你只可以看到在滑动窗口内的 k 个数字。滑动窗口每次只向右移动一位。<br><br>返回 滑动窗口中的最大值 。</p>
+<h2 id="解题思考-1"><a href="#解题思考-1" class="headerlink" title="解题思考"></a>解题思考</h2><p>找到滑动窗口中的最大值，一个直接的思路就是，遍历数组，在滑动窗口中，如果后一个元素比当前滑动窗口中找到的最大值大，那这个就是新的最大值。如果后一个元素比较小，那这个元素仍然得保留，因为有可能是滑动窗口移动过程中，前面的那个最大值会被移出滑动窗口，而这个元素可能成为最大值。<br><br>所以首先我们应该有一个存储结构 <code>queue_num</code> ，存储遍历过程中找到的最大值。在遍历一个新的元素时，我们要从尾部往头部比较，把小于这个元素的值移出存储结构。<br><br>同时，有个问题就是，当滑动窗口移动时，我们怎么判断 <code>queue_num</code> 中的元素已经不在滑动窗口中，应该移除。因此我们对于 <code>queue_num</code> 中的元素，我们要使用一个存储结构 <code>queue</code> 保存其下标，当下标不在滑动窗口时，应该移除 <code>queue_num</code> 中的元素。<br><br>同时，因为我们已经在 <code>queue</code> 中保存了元素的下标，同时其排序与 <code>queue_num</code> 中是一一对应的。所以我们可以不使用 <code>queue_num</code> 存储结构，而是通过 <code>queue</code> 和 <code>nums</code> 数组本身找到对应的最大值。<br></p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">maxSlidingWindow</span>(<span class="keyword">_</span> <span class="params">nums</span>: [<span class="type">Int</span>], <span class="keyword">_</span> <span class="params">k</span>: <span class="type">Int</span>) -&gt; [<span class="type">Int</span>] &#123;</span><br><span class="line">        <span class="keyword">var</span> queue <span class="operator">=</span> [<span class="type">Int</span>]()</span><br><span class="line">        <span class="keyword">var</span> ans <span class="operator">=</span> [<span class="type">Int</span>]()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">0</span><span class="operator">..&lt;</span>k &#123;</span><br><span class="line">            <span class="keyword">while</span> <span class="operator">!</span>queue.isEmpty <span class="operator">&amp;&amp;</span> nums[queue.last<span class="operator">!</span>] <span class="operator">&lt;=</span> nums[i] &#123;</span><br><span class="line">                queue.removeLast()</span><br><span class="line">            &#125;</span><br><span class="line">            queue.append(i)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        ans.append(nums[queue.first<span class="operator">!</span>])</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> k<span class="operator">..&lt;</span>nums.count &#123;</span><br><span class="line">            <span class="keyword">while</span> <span class="operator">!</span>queue.isEmpty <span class="operator">&amp;&amp;</span> nums[queue.last<span class="operator">!</span>] <span class="operator">&lt;=</span> nums[i] &#123;</span><br><span class="line">                queue.removeLast()</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">while</span> <span class="operator">!</span>queue.isEmpty <span class="operator">&amp;&amp;</span> queue.first<span class="operator">!</span> <span class="operator">&lt;</span> i <span class="operator">-</span> k <span class="operator">+</span> <span class="number">1</span> &#123;</span><br><span class="line">                queue.removeFirst()</span><br><span class="line">            &#125;</span><br><span class="line">            queue.append(i)</span><br><span class="line">            ans.append(nums[queue.first<span class="operator">!</span>])</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ans</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="76">最小覆盖子串</h1>
+
+<p>LeetCode 76. 最小覆盖子串<br></p>
+<h2 id="题目-2"><a href="#题目-2" class="headerlink" title="题目"></a>题目</h2><p>给你一个字符串 s 、一个字符串 t 。返回 s 中涵盖 t 所有字符的最小子串。如果 s 中不存在涵盖 t 所有字符的子串，则返回空字符串 “” 。<br></p>
+<h2 id="解题思考-2"><a href="#解题思考-2" class="headerlink" title="解题思考"></a>解题思考</h2><p>找子串的第一个思路，遍历字符串，找出以元素作为子串开头的子串集。<br><br>题目要求的是最小子串，因此我们只需要找到以每个元素作为开头的第一个子串。<br><br>怎么判断子串是我们要找的呢。我们先给 t 字符串创建一个哈希表，记录 t 中出现的字母及次数。接着在找子串时通过这个哈希表对比。<br><br>我们在建立哈希表时，如果是 t 中存在的字符串，我们就在哈希表对应的字母下 <code>+ 1</code> ,如果是子串中存在的字符串我们就是在对应的字母下 <code>- 1</code> 。很明显，我们并不关心不在 t 中出现的字母的情况，因此在找子串时，如果出现的字母没有在 t 中出现，我们之间跳过处理。很明显，最小子串如果存在，一定是以 t 中存在的字母作为开头和结尾的字母。<br><br>我们使用一个变量 <code>diff</code> 记录子串和 t 的差值。因为允许子串中的对应字母数量大于 t 中的数量，因此只有当哈希表中字母的数量在大于零时 <code>-1</code> ，我们才 <code>diff -= 1</code> ，当字母的数量在等于零时 <code>+1</code> ，我们才 <code>diff += 1</code> 。当 <code>diff == 0</code> 时，表示我们找到了子串。<br><br>我们可以使用两个指针，一个指向子串开头，一个指向子串结尾。当 <code>diff != 0</code> 时移动尾指针， 当 <code>diff == 0</code> 时记录子串，然后移动头指针。存在一种情况，当 <code>diff != 0 &amp;&amp; right &gt;= s.count</code> 时，这个时候，在剩下的子串中，已经不可能出现 <code>diff == 0</code> 的情况，所以我们就可以中断查找。<br></p>
+<h2 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">minWindow</span>(<span class="keyword">_</span> <span class="params">s</span>: <span class="type">String</span>, <span class="keyword">_</span> <span class="params">t</span>: <span class="type">String</span>) -&gt; <span class="type">String</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> sArray <span class="operator">=</span> <span class="type">Array</span>(s)</span><br><span class="line">        <span class="keyword">var</span> count <span class="operator">=</span> sArray.count</span><br><span class="line">        <span class="keyword">var</span> len <span class="operator">=</span> <span class="type">Int</span>.max</span><br><span class="line">        <span class="keyword">var</span> begin <span class="operator">=</span> <span class="operator">-</span><span class="number">1</span></span><br><span class="line">        <span class="keyword">var</span> end <span class="operator">=</span> <span class="operator">-</span><span class="number">1</span>    <span class="comment">//end 指向子串末尾元素的下一位置</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> map <span class="operator">=</span> [<span class="type">Character</span>: <span class="type">Int</span>]()</span><br><span class="line">        <span class="keyword">var</span> diff <span class="operator">=</span> <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> c <span class="keyword">in</span> t &#123;</span><br><span class="line">            map[c] <span class="operator">=</span> (map[c] <span class="operator">??</span> <span class="number">0</span>) <span class="operator">+</span> <span class="number">1</span></span><br><span class="line">            diff <span class="operator">+=</span> <span class="number">1</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> left <span class="operator">=</span> <span class="number">0</span></span><br><span class="line">        <span class="keyword">var</span> right <span class="operator">=</span> <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span> left <span class="operator">&lt;</span> count <span class="operator">||</span> right <span class="operator">&lt;</span> count &#123;</span><br><span class="line">            <span class="keyword">while</span> diff <span class="operator">!=</span> <span class="number">0</span> <span class="operator">&amp;&amp;</span> right <span class="operator">&lt;</span> count &#123;</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">let</span> num <span class="operator">=</span> map[sArray[right]] &#123;</span><br><span class="line">                    <span class="keyword">if</span> num <span class="operator">&gt;</span> <span class="number">0</span> &#123;</span><br><span class="line">                        diff <span class="operator">-=</span> <span class="number">1</span></span><br><span class="line">                    &#125;</span><br><span class="line">                    map[sArray[right]] <span class="operator">=</span> num <span class="operator">-</span> <span class="number">1</span></span><br><span class="line">                &#125;</span><br><span class="line">                right <span class="operator">+=</span> <span class="number">1</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">while</span> diff <span class="operator">==</span> <span class="number">0</span> <span class="operator">&amp;&amp;</span> left <span class="operator">&lt;</span> count &#123;</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">let</span> num <span class="operator">=</span> map[sArray[left]] &#123;</span><br><span class="line">                    <span class="keyword">if</span> diff <span class="operator">==</span> <span class="number">0</span> &#123;</span><br><span class="line">                        <span class="keyword">if</span> right <span class="operator">-</span> left <span class="operator">&lt;</span> len &#123;</span><br><span class="line">                            begin <span class="operator">=</span> left</span><br><span class="line">                            end <span class="operator">=</span> right</span><br><span class="line">                            len <span class="operator">=</span> end <span class="operator">-</span> begin</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span> num <span class="operator">&gt;=</span> <span class="number">0</span> &#123;</span><br><span class="line">                        diff <span class="operator">+=</span> <span class="number">1</span></span><br><span class="line">                    &#125;</span><br><span class="line">                    map[sArray[left]] <span class="operator">=</span> num <span class="operator">+</span> <span class="number">1</span></span><br><span class="line">                &#125;</span><br><span class="line">                left <span class="operator">+=</span> <span class="number">1</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> diff <span class="operator">!=</span> <span class="number">0</span> <span class="operator">&amp;&amp;</span> right <span class="operator">&gt;=</span> count &#123;</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> begin <span class="operator">==</span> <span class="operator">-</span><span class="number">1</span> <span class="operator">?</span> <span class="string">&quot;&quot;</span> : <span class="type">String</span>(sArray[begin<span class="operator">..&lt;</span>end])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://illusorycat.github.io/2024/05/30/Swift-Algorithm-4-Substring/" data-id="clwsttbfo00005gqefkeh7fa5" data-title="Swift 算法-4-子串" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Swift-Algorithm-3-SlidingWindow" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2024/05/28/Swift-Algorithm-3-SlidingWindow/" class="article-date">
@@ -1010,510 +1076,12 @@ msys2_shell.cmd
 
 
   
-    <article id="post-Markdown-brief" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/05/20/Markdown-brief/" class="article-date">
-  <time class="dt-published" datetime="2024-05-20T00:53:30.000Z" itemprop="datePublished">2024-05-20</time>
-</a>
+
+
+  <nav id="page-nav">
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/05/20/Markdown-brief/">Markdown 简述</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><p><a href="#1">前言</a><br><a href="#2">Markdown 基本语法</a><br><a href="#3">Markdown 扩展语法</a></p>
-<h1 id="1">前言</h1>
-
-<p>本篇教程旨在方便自己使用 <strong>Markdown</strong> 语法。<br><br>本篇参考 <a target="_blank" rel="noopener" href="https://markdown.com.cn/">Markdown 官网</a>上的资料编写而成。感兴趣的亦可直接移步官网查阅。<br><br>对于编写Markdown文本时使用的工具有很多可选，官网上也推荐了一些比较好用的工具。笔者自己则是使用的 <strong>VSCode</strong> 编辑器+ <strong>Markdown Preview Enhanced</strong> 扩展。对于该搭配的选择，是因为如下几个原因：<br></p>
-<ul>
-<li>VSCode 既可以作为一个代码编辑器，也可以作为一个文本编辑器<br></li>
-<li>MPE 扩展可以帮助我们实时预览 Markdown 文本的效果，同时在预览页面上支持右键菜单，提供了很多功能，比如导出 PDF 等<br></li>
-</ul>
-<h1 id="2">Markdown 基本语法</h1>
-
-<h3 id="1-标题语法"><a href="#1-标题语法" class="headerlink" title="1. 标题语法"></a>1. 标题语法</h3><p>要创建标题，请在标题前添加井号(<code>#</code>)。<code>#</code> 的数量代表了标题的级别。<br><br>需要注意的是，标准的标题语法要求在 <code>#</code> 和标题文字之间使用一个空格进行分隔<br></p>
-<table>
-<thead>
-<tr>
-<th align="center">Markdown语法</th>
-<th align="center">HTML</th>
-<th align="left">预览效果</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center"><code># Heading Level 1</code></td>
-<td align="center"><code>&lt;h1&gt;Heading level 1&lt;/h1&gt;</code></td>
-<td align="left"><h1>Heading level 1</h1></td>
-</tr>
-<tr>
-<td align="center"><code>## Heading Level 2</code></td>
-<td align="center"><code>&lt;h2&gt;Heading level 2&lt;/h2&gt;</code></td>
-<td align="left"><h2>Heading level 1</h2></td>
-</tr>
-<tr>
-<td align="center"><code>### Heading Level 3</code></td>
-<td align="center"><code>&lt;h3&gt;Heading level 3&lt;/h3&gt;</code></td>
-<td align="left"><h3>Heading level 1</h3></td>
-</tr>
-<tr>
-<td align="center"><code>#### Heading Level 4</code></td>
-<td align="center"><code>&lt;h4&gt;Heading level 4&lt;/h4&gt;</code></td>
-<td align="left"><h4>Heading level 1</h4></td>
-</tr>
-<tr>
-<td align="center"><code>##### Heading Level 5</code></td>
-<td align="center"><code>&lt;h5&gt;Heading level 5&lt;/h5&gt;</code></td>
-<td align="left"><h5>Heading level 1</h5></td>
-</tr>
-<tr>
-<td align="center"><code>###### Heading Level 6</code></td>
-<td align="center"><code>&lt;h6&gt;Heading level 6&lt;/h6&gt;</code></td>
-<td align="left"><h6>Heading level 1</h6></td>
-</tr>
-</tbody></table>
-<p>标题语法还支持其他可选语法，但笔者就不在此处赘述了，感兴趣的可以通过上面 Markdown 官网的超链接查看<br></p>
-<h3 id="2-段落语法"><a href="#2-段落语法" class="headerlink" title="2. 段落语法"></a>2. 段落语法</h3><p>要创建段落，请使用空白行将一行或多行文本进行分隔。<br></p>
-<table>
-<thead>
-<tr>
-<th>Markdown语法</th>
-<th>HTML</th>
-<th>预览效果</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>I really like using Markdown.</code><br><br><code>I think I&#39;ll use it to format all of my documents from now on.</code></td>
-<td><p><code>&lt;p&gt;I really like using Markdown.&lt;/p &gt;</code></p ><p><code>&lt;p&gt;I think I&#39;ll use it to format all of my documents from now on.&lt;/p &gt;</code><p></td>
-<td><p>I really like using Markdown.</p ><p>I think I’ll use it to format all of my documents from now on.</p ></td>
-</tr>
-</tbody></table>
-<p>需要注意的是，不要在 Markdown 中使用空格或制表符缩紧段落，因为这会变成代码语法(在后面会讲到)。<br></p>
-<h3 id="3-换行语法"><a href="#3-换行语法" class="headerlink" title="3. 换行语法"></a>3. 换行语法</h3><p>在 Markdown 中，换行需要在一行的末尾添加两个空格，再回车键，即可创建一个换行(<code>&lt;br&gt;</code>)<br></p>
-<table>
-<thead>
-<tr>
-<th>Markdown语法</th>
-<th>HTML</th>
-<th>预览效果</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>This is the first line.</code><br><code>And this is the second line.</code></td>
-<td><code>This is the first line.&lt;br&gt;</code><br><code>And this is the second line.</code></td>
-<td>This is the first line.<br>And this is the second line.</td>
-</tr>
-</tbody></table>
-<p>换行和段落的区别在于不同段落之间的行间距比较大。<br><br>几乎每个 Markdown 程序都会支持使用两个或多个空格进行换行，但是空格是很难在编辑器中看见的，这就会有争议，因此笔者更推荐使用 <code>&lt;br&gt;</code> 来表示换行。(其中的实现机理涉及后面会讲到的内嵌HTML标签)<br></p>
-<h3 id="4-强调语法"><a href="#4-强调语法" class="headerlink" title="4. 强调语法"></a>4. 强调语法</h3><p>我们习惯通过将文本设置为粗体或斜体来强调其需要得到注意。<br></p>
-<h4 id="粗体"><a href="#粗体" class="headerlink" title="粗体"></a>粗体</h4><p>我们在需要加粗的文本前后各添加两个星号。<br></p>
-<table>
-<thead>
-<tr>
-<th>Markdown语法</th>
-<th>HTML</th>
-<th>预览效果</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>I just love **bold text**.</code></td>
-<td><code>I just love &lt;strong&gt;bold text&lt;/strong&gt;.</code></td>
-<td>I just love <strong>bold text</strong>.</td>
-</tr>
-</tbody></table>
-<h4 id="斜体"><a href="#斜体" class="headerlink" title="斜体"></a>斜体</h4><p>我们在需要用斜体显示的文本前后各添加一个星号。<br></p>
-<table>
-<thead>
-<tr>
-<th>Markdown语法</th>
-<th>HTML</th>
-<th>预览效果</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>Italicized text is the *cat&#39;s meow*.</code></td>
-<td><code>Italicized text is the &lt;em&gt;cat&#39;s meow&lt;/em&gt;.</code></td>
-<td>Italicized text is the <em>cat’s meow</em>.</td>
-</tr>
-</tbody></table>
-<h4 id="粗体和斜体"><a href="#粗体和斜体" class="headerlink" title="粗体和斜体"></a>粗体和斜体</h4><p>我们在需要同时使用粗体和斜体突出显示的文本前后各添加三个星号。<br></p>
-<table>
-<thead>
-<tr>
-<th>Markdown语法</th>
-<th>HTML</th>
-<th>预览效果</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>This text is ***really important***.</code></td>
-<td><code>This text is &lt;strong&gt;&lt;em&gt;really important&lt;/em&gt;&lt;/strong&gt;.</code></td>
-<td>This text is <em><strong>really important</strong></em>.</td>
-</tr>
-</tbody></table>
-<h3 id="5-引用语法"><a href="#5-引用语法" class="headerlink" title="5. 引用语法"></a>5. 引用语法</h3><p>引用语法用于创建一个特色样式，表示这一块内容是引用他处的。<br><br>要创建块引用，请在段落前添加一个 <code>&gt;</code> 符号。<br></p>
-<pre><code>&gt; Dorothy followed her through many of the beautiful rooms in her castle.
-</code></pre>
-<p>渲染效果如下所示：<br></p>
-<blockquote>
-<p>Dorothy followed her through many of the beautiful rooms in her castle.</p>
-</blockquote>
-<h4 id="多个段落的块引用"><a href="#多个段落的块引用" class="headerlink" title="多个段落的块引用"></a>多个段落的块引用</h4><p>我们只需要为段落之间的空白行也添加一个 <code>&gt;</code> 符号即可。<br></p>
-<pre><code>&gt; Dorothy followed her through many of the beautiful rooms in her castle.  
-&gt;  
-&gt; The Witch bade her clean the pots and kettles and sweep the floor and keep the fire fed with wood.
-</code></pre>
-<p>渲染效果如下：<br></p>
-<blockquote>
-<p>Dorothy followed her through many of the beautiful rooms in her castle.  </p>
-<p>The Witch bade her clean the pots and kettles and sweep the floor and keep the fire fed with wood.</p>
-</blockquote>
-<h4 id="嵌套块引用"><a href="#嵌套块引用" class="headerlink" title="嵌套块引用"></a>嵌套块引用</h4><p>块引用还可以嵌套。再要嵌套的段落前添加一个 <code>&gt;&gt;</code> 符号。</p>
-<pre><code>&gt; Dorothy followed her through many of the beautiful rooms in her castle.
-&gt;  
-&gt;&gt; The Witch bade her clean the pots and kettles and sweep the floor and keep the fire fed with wood.
-</code></pre>
-<p>渲染效果如下：<br></p>
-<blockquote>
-<p>Dorothy followed her through many of the beautiful rooms in her castle.</p>
-<blockquote>
-<p>The Witch bade her clean the pots and kettles and sweep the floor and keep the fire fed with wood.</p>
-</blockquote>
-</blockquote>
-<h4 id="带有其他元素的块引用"><a href="#带有其他元素的块引用" class="headerlink" title="带有其他元素的块引用"></a>带有其他元素的块引用</h4><p>块引用可以包含其他 Markdown 格式的元素。但并非所有元素都可以使用，你需要进行实验以查看哪些元素有效。<br></p>
-<pre><code>&gt; #### The quarterly results look great!
-    &gt;
-&gt; - Revenue was off the chart.
-&gt; - Profits were higher than ever.
-&gt;
-&gt;  *Everything* is going according to **plan**.
-</code></pre>
-<p>渲染效果如下：<br></p>
-<blockquote>
-<h4 id="The-quarterly-results-look-great"><a href="#The-quarterly-results-look-great" class="headerlink" title="The quarterly results look great!"></a>The quarterly results look great!</h4><ul>
-<li>Revenue was off the chart.</li>
-<li>Profits were higher than ever.</li>
-</ul>
-<p> <em>Everything</em> is going according to <strong>plan</strong>.</p>
-</blockquote>
-<h3 id="6-列表语法"><a href="#6-列表语法" class="headerlink" title="6. 列表语法"></a>6. 列表语法</h3><p>我们可以将多个条目组织成有序或无序列表。</p>
-<h4 id="有序列表"><a href="#有序列表" class="headerlink" title="有序列表"></a>有序列表</h4><p>要创建有序列表，只需要在每个列表项前添加数字并紧跟一个英文句号。<br><br>需要注意的是，数字和英文句号与列表项之间需要使用空格分隔。<br><br>列表中的项的数字不需要有序，但列表会以第一项的数字作为起始序号为整个列表编码序号。<br></p>
-<table>
-<thead>
-<tr>
-<th>Markdown语法</th>
-<th>HTML</th>
-<th>预览效果</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>1. First item</code><br><code>2. Second item</code><br><code>3. Third item</code><br><code>4. Fourth item</code></td>
-<td><code>&lt;ol&gt;</code><br><code>&lt;li&gt;First item&lt;/li&gt;</code><br><code>&lt;li&gt;Second item&lt;/li&gt;</code><br><code>&lt;li&gt;Third item&lt;/li&gt;</code><br><code>&lt;li&gt;Fourth item&lt;/li&gt;</code><br><code>&lt;/ol&gt;</code></td>
-<td><ol><li>First item</li><li>Second item</li><li>Third item</li><li>Fourth item</li></ol></td>
-</tr>
-<tr>
-<td><code>2. First item</code><br><code>5. Second item</code><br><code>9. Third item</code><br><code>3. Fourth item</code></td>
-<td><code>&lt;ol&gt;</code><br><code>&lt;li&gt;First item&lt;/li&gt;</code><br><code>&lt;li&gt;Second item&lt;/li&gt;</code><br><code>&lt;li&gt;Third item&lt;/li&gt;</code><br><code>&lt;li&gt;Fourth item&lt;/li&gt;</code><br><code>&lt;/ol&gt;</code></td>
-<td><ol start="2"><li>First item</li><li>Second item</li><li>Third item</li><li>Fourth item</li></ol></td>
-</tr>
-</tbody></table>
-<h4 id="无序列表"><a href="#无序列表" class="headerlink" title="无序列表"></a>无序列表</h4><p>要创建无序列表，只需要在每个列表项前添加破折号( <code>-</code> )即可。<br><br>同时你可以通过使用缩进来实现列表项的嵌套<br></p>
-<table>
-<thead>
-<tr>
-<th>Markdown语法</th>
-<th>HTML</th>
-<th>预览效果</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>- First item</code><br><code>- Second item</code><br><code> - Third item</code><br><code>- Fourth item</code></td>
-<td><code>&lt;ul&gt;</code><br><code>&lt;li&gt;First item&lt;/li&gt;</code><br><code>&lt;li&gt;Second item&lt;/li&gt;</code><br><code>&lt;ul&gt;</code><br><code>&lt;li&gt;Third item&lt;/li&gt;</code><br><code>&lt;/ul&gt;</code><br><code>&lt;li&gt;Fourth item&lt;/li&gt;</code><br><code>&lt;/ul&gt;</code></td>
-<td><ul><li>First item</li><li>Second item</li><ul><li>Third item</li></ul><li>Fourth item</li></ul></td>
-</tr>
-</tbody></table>
-<p>至于 Markdown 语法中有序列表是否可以做嵌套读者可以自己实践一下。<br></p>
-<h4 id="在列表中嵌套其他元素"><a href="#在列表中嵌套其他元素" class="headerlink" title="在列表中嵌套其他元素"></a>在列表中嵌套其他元素</h4><p>要在保留列表连续性的同时在列表中添加另一种元素，可以将该元素缩进四个空格或一个制表符。<br><br>简单的，我们可以在列表中嵌套段落、引用块、代码块、图片等，也可以在有序列表中嵌套无序列表。<br></p>
-<ol>
-<li><p>Open the file.</p>
-</li>
-<li><p>Find the following code block on line 21:</p>
-<pre><code> &lt;html&gt;
-  &lt;head&gt;
-   &lt;title&gt;Text&lt;/title&gt;
-  &lt;/head&gt;
- &lt;/html&gt;
-</code></pre>
-</li>
-<li><p>Update the title to match the name of your website.</p>
-</li>
-</ol>
-<h3 id="7-代码语法"><a href="#7-代码语法" class="headerlink" title="7. 代码语法"></a>7. 代码语法</h3><p>要将单词或短语表示为代码，你可以将它们包裹在反引号( <code>`</code>)中。<br></p>
-<table>
-<thead>
-<tr>
-<th>Markdown语法</th>
-<th>HTML</th>
-<th>预览效果</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>At he command prompt, type `nano`.</code></td>
-<td><code>At he command prompt, type&lt;code&gt;nano&lt;/code&gt;.</code></td>
-<td>At he command prompt, type <code>nano</code>.</td>
-</tr>
-</tbody></table>
-<h4 id="转义反引号"><a href="#转义反引号" class="headerlink" title="转义反引号"></a>转义反引号</h4><p>如果你要表示为代码的单词或短语中包含反引号，则可以通过将单词或短语包裹中双反引号(<code>``</code>)中。<br><br>注意，请不要将反引号和双反引号拼接在一起，那样子 Markdown 会识别不出来的！<br></p>
-<table>
- <tr>
-  <th>Markdown语法</th>
-  <th>HTML</th>
-  <th>预览效果</th>
- </tr>
- <tr>
-  <td><code>``Use `code` in your Markdown file.``</code></td>
-  <td><code>&lt;code&gt;Use `code` in your Markdown file.&lt;/code&gt;</code></td>
-  <td><code>Use `code` in your Markdown file.</code></td>
- </tr>
-</table>
-
-<h4 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h4><p>要创建代码块，只需要在代码块的每一行缩进四个空格或一个制表符。<br></p>
-<pre><code>    &lt;html&gt;
-     &lt;head&gt;
-     &lt;/head&gt;
-    &lt;/html&gt; 
-</code></pre>
-<p>渲染效果如下：<br></p>
-<pre><code>&lt;html&gt;
- &lt;head&gt;
- &lt;/head&gt;
-&lt;/html&gt; 
-</code></pre>
-<p>在 Markdown 的扩展语法中，还提供了一种不用缩进就可以创建代码块的方式。<br></p>
-<h3 id="8-分隔线语法"><a href="#8-分隔线语法" class="headerlink" title="8. 分隔线语法"></a>8. 分隔线语法</h3><p>要创建分隔线，只需要在单独的一行上使用三个或多个星号( <code>***</code> )、破折号( <code>---</code> )、下划线( <code>___</code> )，注意三种不能混用。<br></p>
-<pre><code>***
----
-——————
-</code></pre>
-<p>以上三种分隔线的渲染效果是一致的：<br></p>
-<hr>
-<p>为了兼容性，最好在分隔线前后均添加空白行。<br></p>
-<h3 id="9-链接语法"><a href="#9-链接语法" class="headerlink" title="9. 链接语法"></a>9. 链接语法</h3><p>Markdown 的链接语法如下：<br></p>
-<pre><code>[超链接显示名](超链接地址 “超链接 title ”)
-</code></pre>
-<p>其中超链接 title 是可选的，添加 title 的效果为鼠标悬浮在链接上时会文字。注意超链接 title 和地址之间要用空格分隔。<br></p>
-<pre><code>这是一个链接[Markdown语法](https://markdown.com.cn &quot;官方教程&quot;)。
-</code></pre>
-<p>渲染效果如下：<br><br>这是一个链接 <a target="_blank" rel="noopener" href="https://markdown.com.cn/" title="官方教程">Markdown语法</a>。<br><br>需要注意的是，如果你的地址中存在空格，那最好使用%20替换，否则可能存在兼容性问题。<br></p>
-<h4 id="网址和-Email-语法"><a href="#网址和-Email-语法" class="headerlink" title="网址和 Email 语法"></a>网址和 Email 语法</h4><p>如果你不需要为你的超链接地址设置额外的显示文本，你可以直接用尖括号建起包裹变成超链接。<br></p>
-<pre><code>&lt;https://markdown.com.cn&gt;
-&lt;fake@example.com&gt;
-</code></pre>
-<p>渲染效果如下：<br><br><a target="_blank" rel="noopener" href="https://markdown.com.cn/">https://markdown.com.cn</a><br><a href="mailto:&#x66;&#x61;&#107;&#x65;&#64;&#101;&#x78;&#x61;&#x6d;&#112;&#108;&#101;&#46;&#x63;&#111;&#109;">&#x66;&#x61;&#107;&#x65;&#64;&#101;&#x78;&#x61;&#x6d;&#112;&#108;&#101;&#46;&#x63;&#111;&#109;</a></p>
-<h4 id="带格式的链接"><a href="#带格式的链接" class="headerlink" title="带格式的链接"></a>带格式的链接</h4><p>你可以使用一些格式强调你的链接，比如粗体和斜体。<br></p>
-<pre><code>I love supporting the **[EFF](https://eff.org)**.
-I love supporting the *[EFF](https://eff.org)*.
-</code></pre>
-<p>I love supporting the <strong><a target="_blank" rel="noopener" href="https://eff.org/">EFF</a></strong>.<br>I love supporting the <em><a target="_blank" rel="noopener" href="https://eff.org/">EFF</a></em>.<br>事实上用粗体强调链接并不算太好的注意，对吗！<br><br>除此之外，你也可以用代码格式强调链接。其语法与上述不同，它需要你在中括号中用代码语法包裹链接显示名。<br></p>
-<pre><code>I love supporting the [`EFF`](https://eff.org)
-</code></pre>
-<p>I love supporting the <a target="_blank" rel="noopener" href="https://eff.org/"><code>EFF</code></a></p>
-<h4 id="引用类型链接"><a href="#引用类型链接" class="headerlink" title="引用类型链接"></a>引用类型链接</h4><p>这种链接格式多用于文献写中，由于不常用，故不在此记录。需要时查阅官网教程即可。<br></p>
-<h3 id="10-图片语法"><a href="#10-图片语法" class="headerlink" title="10. 图片语法"></a>10. 图片语法</h3><p>图片语法与链接语法极为相似，仅仅只是在链接语法前增加一个感叹号( <code>!</code> )。<br></p>
-<pre><code>![图片名](图片地址 "图片 title ")</code></pre><br>
-
-<p><img src="https://github.com/illusorycat/MyPictureBase/blob/main/image/202403142336781.png?raw=true" title="这是 title"><br><br>当鼠标悬浮在图片上时，则会显示图片 title。<br></p>
-<h4 id="带链接的图片"><a href="#带链接的图片" class="headerlink" title="带链接的图片"></a>带链接的图片</h4><p>给图片增加链接，仅需要将图片的 Markdown 放在链接的中括号中即可。<br></p>
-<pre><code>[![沙漠中的岩石图片](https://github.com/illusorycat/MyPictureBase/blob/main/image/202403191909796.png?raw=true "Shiprock")](https://markdown.com.cn)</code></pre><br>
-<p><a target="_blank" rel="noopener" href="https://markdown.com.cn/"><img src="https://github.com/illusorycat/MyPictureBase/blob/main/image/202403191909796.png?raw=true" alt="沙漠中的岩石图片" title="Shiprock"></a><br></p>
-<h3 id="11-转义字符语法"><a href="#11-转义字符语法" class="headerlink" title="11. 转义字符语法"></a>11. 转义字符语法</h3><p>转义字符语法用于显示原本用于格式化 Markdown文档的字符，只需要在字符签名添加反斜杠字符即可。</p>
-<pre><code>\*Without the backslash, this would be a bullet in an unordered list.
-</code></pre>
-<p>渲染效果如下：<br><br>*Without the backslash, this would be a bullet in an unordered list.</p>
-<h4 id="可转移的字符"><a href="#可转移的字符" class="headerlink" title="可转移的字符"></a>可转移的字符</h4><p>以下列出的字符都可以通过增加反斜杠字符来实现转义。<br></p>
-<table>
- <tr><th>Character</tr>
- <tr><td>\</tr>
- <tr><td>`</tr>
- <tr><td>*</tr>
- <tr><td>_</tr>
- <tr><td>{}</tr>
- <tr><td>[]</tr>
- <tr><td>()</tr>
- <tr><td>#</tr>
- <tr><td>+</tr>
- <tr><td>-</tr>
- <tr><td>.</tr>
- <tr><td>!</tr>
- <tr><td>|</tr>
-</table>
-
-<h3 id="12-内嵌-HTML-标签"><a href="#12-内嵌-HTML-标签" class="headerlink" title="12. 内嵌 HTML 标签"></a>12. 内嵌 HTML 标签</h3><p>Markdown 支持内嵌 HTML 标签。<br>对于 HTML 的行级内联标签如<code>&lt;span&gt;</code>、<code>&lt;cite&gt;</code>、<code>&lt;del&gt;</code>不受限制，可以中 Markdown 的段落、列表或者标题中任意使用。<br><br>但是对于区块标签如<code>&lt;div&gt;</code>、<code>&lt;table&gt;</code>、<code>&lt;pre&gt;</code>、<code>&lt;p&gt;</code>等标签，必须在前后加上空行，以便与内容区分。<br>同时， Markdown 语法无法在 HTML 区块中进行处理。也就是说，你无法在 HTML 区块中使用 Markdown 语法。<br></p>
-<h1 id="3">Markdown 扩展语法</h1>
-
-<p>适当使用扩展语法可以更好的充实你的文档。但是，请注意，并不是所有扩展语法都被支持，也并不是所有的处理器都支持你使用的扩展语法。<br></p>
-<h3 id="1-表格"><a href="#1-表格" class="headerlink" title="1. 表格"></a>1. 表格</h3><p>我们使用管道( <code>|</code> )分隔每列，使用至少三个连字符( <code>---</code>) 创建分隔标题和内容。<br></p>
-<pre><code>| Syntax     | Description|
-| -----------| -----------|
-| Header     | Title      |
-| Paragraph  | Text       |
-</code></pre>
-<p>呈现的输出如下:</p>
-<table>
-<thead>
-<tr>
-<th>Syntax</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Header</td>
-<td>Title</td>
-</tr>
-<tr>
-<td>Paragraph</td>
-<td>Text</td>
-</tr>
-</tbody></table>
-<p><strong>Tip:</strong> 很显然，手动敲这一大串语法很麻烦，我们可以使用 <a target="_blank" rel="noopener" href="https://www.tablesgenerator.com/markdown_tables">Markdown Tables Generator</a> 。只需要使用图形界面构建表，然后将生成的 Markdown 格式的文本复制到你想要的地方即可。</p>
-<h4 id="对齐"><a href="#对齐" class="headerlink" title="对齐"></a>对齐</h4><p>我们可以中标题行中使用冒号( <code>:</code>) 来设置该列的文本对齐方式。</p>
-<pre><code>| Syntax    | Description |   Test Text |
-| :---      | :---:       |        ---: |
-| Header    |    TItle    | Here&#39;s this |
-| Paragraph |     Text    |    And more |
-</code></pre>
-<p>呈现的输出如下所示：<br></p>
-<table>
-<thead>
-<tr>
-<th align="left">Syntax</th>
-<th align="center">Description</th>
-<th align="right">Test Text</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">Header</td>
-<td align="center">TItle</td>
-<td align="right">Here’s this</td>
-</tr>
-<tr>
-<td align="left">Paragraph</td>
-<td align="center">Text</td>
-<td align="right">And more</td>
-</tr>
-</tbody></table>
-<h4 id="格式化表格中的文字"><a href="#格式化表格中的文字" class="headerlink" title="格式化表格中的文字"></a>格式化表格中的文字</h4><p>我们可以在表格中添加链接，代码(不支持代码块)和强调。<br></p>
-<h4 id="在表中显示管道字符"><a href="#在表中显示管道字符" class="headerlink" title="在表中显示管道字符"></a>在表中显示管道字符</h4><p>我们可以使用表格的 HTML 字符代码( <code>&amp;#124;</code> ) 在表中显示管道( <code>|</code> )字符。<br></p>
-<pre><code>| Character |
-| ---       |
-| &amp;#124;    |
-</code></pre>
-<p>呈现的输出如下: <br></p>
-<table>
-<thead>
-<tr>
-<th>Character</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>&#124;</td>
-</tr>
-</tbody></table>
-<h3 id="2-围栏代码块"><a href="#2-围栏代码块" class="headerlink" title="2. 围栏代码块"></a>2. 围栏代码块</h3><p>有时使用缩进来创建代码块很不方便。这时我们可以尝试使用围栏代码块语法。<br>在代码块前后的行使用三个反引号( <code>```</code> ) 或三个波浪号( <code>~~~</code> )。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line">&#123;</span><br><span class="line">  &quot;firstName&quot;: &quot;John&quot;,</span><br><span class="line">  &quot;lastName&quot;: &quot;Smith&quot;,</span><br><span class="line">  &quot;age&quot;: 25</span><br><span class="line">&#125;</span><br><span class="line">```</span><br></pre></td></tr></table></figure>
-
-<p>呈现的输出如下:<br></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;firstName&quot;: &quot;John&quot;,</span><br><span class="line">  &quot;lastName&quot;: &quot;Smith&quot;,</span><br><span class="line">  &quot;age&quot;: 25</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>和在代码行中显示反引号一样，在代码块中显示反引号同样不能仅靠转义符( <code>\</code> )。<br><br>在代码块中显示反引号，你需要将代码块包裹在四个反引号之间。<br></p>
-<h4 id="语法高亮"><a href="#语法高亮" class="headerlink" title="语法高亮"></a>语法高亮</h4><p>许多 Markdown 处理器都支持维码代码块的语法突出显示，只需要在代码块的反引号旁边指定一种语言。<br></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">```json</span><br><span class="line">&#123;</span><br><span class="line">  &quot;firstName&quot;: &quot;John&quot;,</span><br><span class="line">  &quot;lastName&quot;: &quot;Smith&quot;,</span><br><span class="line">  &quot;age&quot;: 25</span><br><span class="line">&#125;</span><br><span class="line">```</span><br></pre></td></tr></table></figure>
-
-<p>呈现效果如下:<br></p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;firstName&quot;</span><span class="punctuation">:</span> <span class="string">&quot;John&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;lastName&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Smith&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;age&quot;</span><span class="punctuation">:</span> <span class="number">25</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="3-标题编号"><a href="#3-标题编号" class="headerlink" title="3. 标题编号"></a>3. 标题编号</h3><p>许多 Markdown 处理器支持标题的自定义 ID 。<br></p>
-<pre><code>### My Great Heading &#123;#custom-id&#125;
-</code></pre>
-<p>HTML 语法如下:<br></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h3</span> <span class="attr">id</span>=<span class="string">&quot;custom-id&quot;</span>&gt;</span>My Great Heading<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="链接到标题-ID"><a href="#链接到标题-ID" class="headerlink" title="链接到标题 ID"></a>链接到标题 ID</h4><p>我们可以创建链接语法链接到文件中具有自定义 ID 的标题。<br></p>
-<pre><code>[Heading IDs](#heading-ids)
-</code></pre>
-<p>HTML 语法如下:<br></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;custom-id&quot;</span>&gt;</span>My Great Heading<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>其他网站可以通过将自定义标题 ID 添加到我特的完整 URL (例如 <code>[Heading IDs](url#custom-id)</code> ) 来链接到标题。<br></p>
-<h3 id="4-定义列表"><a href="#4-定义列表" class="headerlink" title="4. 定义列表"></a>4. 定义列表</h3><p>在基本语法中我们介绍了列表，包括有序列表和无序列表。现在我们介绍另外一种列表，定义列表。<br><br>创建定义列表的语法是，在第一行键入术语。在下一行，键入一个冒号，后跟一个空格和定义。<br></p>
-<pre><code>First Term
-: This is the definition of the first term.
-
-Second Term
-: This is one definition of the second term.
-: This is another definition of the second term.
-</code></pre>
-<p>HTML 看起来像这样:<br></p>
-<pre><code>&lt;dl&gt;
- &lt;dt&gt;First Term&lt;/dt&gt;
- &lt;dd&gt;This is the definition of the first term.&lt;/dd&gt;
- &lt;dt&gt;Second Term&lt;/dt&gt;
- &lt;dd&gt;This is one definition of the second term.&lt;/dd&gt;
- &lt;dd&gt;This is another definition of the second term.&lt;/dd&gt;
-</code></pre>
-<p>呈现的输出如下所示：<br></p>
-<dl><dt>First Term</dt><dd>This is the definition of the first term.</dd></dl><dl><dt>Second Term<br>: This is one definition of the second term.</dt><dd>This is another definition of the second term.</dd></dl><p>需要注意的是， Markdown 语法中，前一个定义术语的内容与后一个定义术语直接需要用一个空行隔开。<br></p>
-<h3 id="5-删除线"><a href="#5-删除线" class="headerlink" title="5. 删除线"></a>5. 删除线</h3><p>我们可以在单词前后使用两个波浪号( <code>~~</code> ) 来创建删除线的效果。<br></p>
-<pre><code>~~世界是平坦的。~~ 我们现在知道世界是圆的。
-</code></pre>
-<p><del>世界是平坦的。</del> 我们现在知道世界是圆的。<br></p>
-<h3 id="6-任务列表语法"><a href="#6-任务列表语法" class="headerlink" title="6. 任务列表语法"></a>6. 任务列表语法</h3><p>这次我们介绍另一种新的列表语法，任务列表。<br><br>要创建任务列表，我们需要在任务列表项前添加破折号( <code>-</code> )和方括号( <code>[]</code> )。破折号、方括号和列表项之间都要使用空格隔开。<br><br>如果你想勾选任务，则在方括号之间添加 <code>x</code> 。<br></p>
-<pre><code>- [x] Write the press release
-- [ ] Update the website
-- [ ] Contact the media
-</code></pre>
-<p>呈现的输出如下: <br></p>
-<ul>
-<li><input checked="" disabled="" type="checkbox"> Write the press release</li>
-<li><input disabled="" type="checkbox"> Update the website</li>
-<li><input disabled="" type="checkbox"> Contact the media</li>
-</ul>
-<h3 id="7-使用-Emoji-表情"><a href="#7-使用-Emoji-表情" class="headerlink" title="7. 使用 Emoji 表情"></a>7. 使用 Emoji 表情</h3><p>我们可以简单地将表情符号复制并粘贴到 Markdown 格式的文本中，或者键入 emoji shortcodes 。<br></p>
-<h4 id="复制和粘贴表情符号"><a href="#复制和粘贴表情符号" class="headerlink" title="复制和粘贴表情符号"></a>复制和粘贴表情符号</h4><p>我们可以简单地从 <a target="_blank" rel="noopener" href="https://emojipedia.org/">Emojipedia</a> 等来源复制表情符号。<br><br><strong>Tip:</strong> 如果你使用的是静态网站生成器，请确保将 HTML 页面编码为 UTF-8 。<br></p>
-<h4 id="使用表情符号简码"><a href="#使用表情符号简码" class="headerlink" title="使用表情符号简码"></a>使用表情符号简码</h4><p>一些 Markdown 应用程序允许通过键入表情符号简码来插入表情符号。这同样意味着表情符号简码因应用程序而异。<br><br>表情符号简码以冒号开头和结尾。<br></p>
-<pre><code>去露营了！ :tent: 很快回来。
-真好笑！ :joy:
-</code></pre>
-<p>去露营了！ :tent: 很快回来。<br><br>真好笑！ :joy: <br><br><strong>Tip:</strong> 你可以使用此<a target="_blank" rel="noopener" href="https://gist.github.com/rxaviers/7360908">表情符号简码列表</a>。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://illusorycat.github.io/2024/05/20/Markdown-brief/" data-id="clwpulq0000096wqea9m3aa1r" data-title="Markdown 简述" class="article-share-link"><span class="fa fa-share">分享</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%AD%E6%B3%95/" rel="tag">语法</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">下一页 &raquo;</a>
+  </nav>
 
 </section>
         
@@ -1536,7 +1104,7 @@ Second Term
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/%E4%BB%A3%E7%A0%81%E4%BA%BA%E7%94%9F/" style="font-size: 10px;">代码人生</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 20px;">工具</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 20px;">算法</a> <a href="/tags/%E8%AF%AD%E6%B3%95/" style="font-size: 15px;">语法</a>
+      <a href="/tags/%E4%BB%A3%E7%A0%81%E4%BA%BA%E7%94%9F/" style="font-size: 10px;">代码人生</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 16.67px;">工具</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 20px;">算法</a> <a href="/tags/%E8%AF%AD%E6%B3%95/" style="font-size: 13.33px;">语法</a>
     </div>
   </div>
 
@@ -1558,6 +1126,10 @@ Second Term
       <ul>
         
           <li>
+            <a href="/2024/05/30/Swift-Algorithm-4-Substring/">Swift 算法-4-子串</a>
+          </li>
+        
+          <li>
             <a href="/2024/05/28/Swift-Algorithm-3-SlidingWindow/">Swift 算法-3-滑动窗口</a>
           </li>
         
@@ -1571,10 +1143,6 @@ Second Term
         
           <li>
             <a href="/2024/05/20/Start-with-Flutter-%E2%85%A0/">Flutter 入门指引 Ⅰ</a>
-          </li>
-        
-          <li>
-            <a href="/2024/05/20/Dart-brief/">Dart 简述</a>
           </li>
         
       </ul>

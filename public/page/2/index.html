@@ -71,6 +71,66 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Build-gallery-with-PicGo" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/05/20/Build-gallery-with-PicGo/" class="article-date">
+  <time class="dt-published" datetime="2024-05-20T01:10:55.000Z" itemprop="datePublished">2024-05-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/05/20/Build-gallery-with-PicGo/">使用 PicGo 搭建图床</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><p><a href="#1">前言</a><br><a href="#2">图床</a><br><a href="#3">搭建图床</a></p>
+<h1 id="1">前言</h1>
+
+<p>本教程用于记录笔者使用 <strong>PicGo</strong> 工具创建图床的过程。<br></p>
+<h1 id="2">图床</h1>
+
+<p>图床其实就是在互联网上存储图片的一块空间，你可以把它理解为一个在线数据库，其中的数据是图片。我们可以通过一个 URL 访问图床中的图片。<br></p>
+<h3 id="图床工具"><a href="#图床工具" class="headerlink" title="图床工具"></a>图床工具</h3><p>图床工具主要是方便人们创建搭建图床，比如笔者使用的图床工具是 <a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/PicGo">PicGo</a> 。<br><br>PicGo 支持多个图床服务，比如七牛图床、腾讯云、Github 等。笔者选用的是 Github 。<br></p>
+<h1 id="3">搭建图床</h1>
+
+<h3 id="Github-仓库"><a href="#Github-仓库" class="headerlink" title="Github 仓库"></a>Github 仓库</h3><p>首先我们要在 Github 上创建一个图床仓库。<br><br>在 <a target="_blank" rel="noopener" href="https://github.com/">Github</a> 上登陆自己的账户。然后点击右上角的加号( <code>+</code> )创建一个新的仓库，如下:<br><br><img src="https://github.com/illusorycat/MyPictureBase/blob/main/image/202403201009405.png?raw=true"><br><br>在 Repository name * 输入框中填写图床的名称，比如笔者使用的是 <strong>MyPictureBase</strong> 。仓库权限选择 Public 。下面的 <strong>Add a README file</strong> 是可选项，选择了 Github 就会根据你的仓库描述自动生成一个 README 文件。然后点击 <strong>Create repository</strong> 按键创建仓库即可。<br><br><img src="https://github.com/illusorycat/MyPictureBase/blob/main/image/202403201011304.png?raw=true"><br></p>
+<h4 id="创建私人-Token"><a href="#创建私人-Token" class="headerlink" title="创建私人 Token"></a>创建私人 Token</h4><p>点击右上角的头像，选择 “Settings” 进入设置页。然后在侧边栏找到 “Developer settings” 进入开发者设置页。最后选择创建私人 Token(classic) 。<br><br><img src="https://raw.githubusercontent.com/illusorycat/MyPictureBase/main/image/202403201411328.png"><br><br>设置 Token 的过期时间时可以尽可能的延长它或者直接选择不过期。勾选下面的 “repo” 项。最后点击最下方的 “Generate Token” 按键即可。<br><br><img src="https://raw.githubusercontent.com/illusorycat/MyPictureBase/main/image/202403201413750.png"><br><br>然后你就可以看到你生成的私人 Token ，请确保不要让其他人知晓它，在离开这个界面之前复制并保存它，否则你将找不到它。<br><br><img src="https://raw.githubusercontent.com/illusorycat/MyPictureBase/main/image/202403201416467.png"><br></p>
+<h3 id="PicGo-工具安装使用"><a href="#PicGo-工具安装使用" class="headerlink" title="PicGo 工具安装使用"></a>PicGo 工具安装使用</h3><p>PicGo 工具笔者是直接在 Github 上下载作者生成的 release 文件，具体下载链接可<a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/PicGo/releases">点击这儿</a>。<br><br>笔者选用的是最新的稳定版本 2.3.1 正式版，同时笔者是在 MacOS 平台下使用的，所以下载了 PicGo-2.3.1-arm64.dmg 。<br></p>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>下载之后直接双击打开就可以看到 PicGo 软件的可执行文件，将其拽拖到应用文件目录即可。<br><br>但是，由于苹果的安全验证机制，并且 PicGo 并没有执行苹果要求的签证机制，因此我们一开始是无法打开的。<br><br><img src="https://github.com/illusorycat/MyPictureBase/blob/main/image/202403201028811.png?raw=true"><br><br>从 PicGo 作者提供的 <a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/PicGo/blob/dev/FAQ.md">FAQ</a> 中我们可以找到此问题的解决方案。<br><br>打开终端并执行下述指令:<br></p>
+<ol>
+<li>临时禁用系统完整性保护<br> <code>sudo spctl --master-disable</code></li>
+<li>手动放行 PicGo<br> <code>xattr -cr /Applications/PicGo.app</code></li>
+</ol>
+<p>禁用系统完整性保护后，我们可以在系统设置中的隐私和安全中看到。<br><br><img src="https://github.com/illusorycat/MyPictureBase/blob/main/image/202403201036870.png?raw=true"><br></p>
+<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><p>PicGo 软件打开后会最小化到 MacOS 系统右上角。点击右上角图标 <img src="https://github.com/illusorycat/MyPictureBase/blob/main/image/202403201150958.png?raw=true" style="width:30px; height:auto;"></img> 打开软件，软件主界面如下。<br><br><img src="https://github.com/illusorycat/MyPictureBase/blob/main/image/202403201159299.png?raw=true"><br><br>点击图床设置，选择 Github ，填写相应的信息并确认设置。<br><br><img src="https://github.com/illusorycat/MyPictureBase/blob/main/image/202403201354641.png?raw=true"><br><br>仓库名称一般是<code>Github用户名/仓库名</code>，比如笔者是 <code>illusorycat/MyPictureBase</code>。<br><br>分支名显而易见，比如笔者是 <code>main</code>。<br>Token 是在 GitHub 上创建的私人 token 。<br><br>存储路径可不填。<br><br>自定义域名也可不填。<br><br>确认上述信息并将 Github 设置为默认图床即可开始上传了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://illusorycat.github.io/2024/05/20/Build-gallery-with-PicGo/" data-id="clwpulpzx00026wqe4zqh5tfo" data-title="使用 PicGo 搭建图床" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Markdown-brief" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2024/05/20/Markdown-brief/" class="article-date">
@@ -611,7 +671,7 @@ Second Term
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">五月 2024</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">六月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">五月 2024</a></li></ul>
     </div>
   </div>
 
@@ -622,6 +682,10 @@ Second Term
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2024/06/04/Swift-Algorithm-5-Array/">Swift 算法-5-数组</a>
+          </li>
         
           <li>
             <a href="/2024/05/30/Swift-Algorithm-4-Substring/">Swift 算法-4-子串</a>
@@ -637,10 +701,6 @@ Second Term
         
           <li>
             <a href="/2024/05/23/Swift-Algorithm-1-Hash/">Swift 算法-1-哈希</a>
-          </li>
-        
-          <li>
-            <a href="/2024/05/20/Start-with-Flutter-%E2%85%A0/">Flutter 入门指引 Ⅰ</a>
           </li>
         
       </ul>

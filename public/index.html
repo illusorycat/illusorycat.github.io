@@ -71,6 +71,92 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Swift-Algorithm-5-Array" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/06/04/Swift-Algorithm-5-Array/" class="article-date">
+  <time class="dt-published" datetime="2024-06-04T03:07:31.000Z" itemprop="datePublished">2024-06-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/06/04/Swift-Algorithm-5-Array/">Swift 算法-5-数组</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><p><a href="#0">前言</a><br><a href="#53">最大子数组和</a><br><a href="#56">合并区间</a><br><a href="#189">轮转数组</a><br><a href="#238">除自身以外数组的乘积</a><br><a href="#41">缺失的第一个正数</a></p>
+<h1 id="0">前言</h1>
+
+<p>本文题目来源 LeetCode ，主要用于记录笔者的一些解题思路和思考。<br><br>本文的主题是普通数组。<br></p>
+<h1 id="53">最大子数组和</h1>
+
+<p>LeetCode 53. 最大子数组和<br></p>
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给你一个整数数组 nums ，请你找出一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。<br><br>子数组是数组中的一个连续部分。<br></p>
+<h2 id="解题思考"><a href="#解题思考" class="headerlink" title="解题思考"></a>解题思考</h2><p>根据题目要求，我们要找出数组中 <code>[i,j]</code> 集合的和最大值。<br><br>$$<br>[i,j] &#x3D; \begin{cases}<br>[0…j] - [0…i - 1] &amp; (0 &lt; i \leq j) \<br>[0…j] &amp; (0 &lt; j)<br>\end{cases}<br>$$<br>也就是说，我们只需要遍历一次数组，计算 <code>[0...i]</code> 的值，并取出最大值和最小值相减，即可得到答案。<br><br>同时，存在一个临界条件，如果 <code>[0...i]</code> 刚好就是题目的答案，则对应的应减去的最小值是 0 。<br><br>并且，使用最大值和最小值时需保证不是同一个值。<br><br>所以我们直接在遍历数组时计算 <code>[0...j]</code> 的值，并取出前面计算得到的最小值，然后相减，再判断其是不是和最大值。<br></p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">maxSubArray</span>(<span class="keyword">_</span> <span class="params">nums</span>: [<span class="type">Int</span>]) -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> minInt <span class="operator">=</span> <span class="number">0</span></span><br><span class="line">        <span class="keyword">var</span> maxAns <span class="operator">=</span> <span class="type">Int</span>.min</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> sum <span class="operator">=</span> <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> num <span class="keyword">in</span> nums &#123;</span><br><span class="line">            sum <span class="operator">+=</span> num</span><br><span class="line">            maxAns <span class="operator">=</span> <span class="built_in">max</span>(maxAns, sum <span class="operator">-</span> minInt)</span><br><span class="line">            minInt <span class="operator">=</span> <span class="built_in">min</span>(minInt, sum)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> maxAns</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="拓展解法"><a href="#拓展解法" class="headerlink" title="拓展解法"></a>拓展解法</h2><p>上面的思路还是不够直接，我们直接遍历数组计算 <code>[0...j]</code> ，判断 <code>[0...j]</code> 和 <code>[0...j - 1]</code> 的大小。<br></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">maxSubArray</span>(<span class="keyword">_</span> <span class="params">nums</span>: [<span class="type">Int</span>]) -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> prev <span class="operator">=</span> <span class="number">0</span></span><br><span class="line">        <span class="keyword">var</span> ans <span class="operator">=</span> nums[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">for</span> num <span class="keyword">in</span> nums &#123;</span><br><span class="line">            prev <span class="operator">=</span> <span class="built_in">max</span>(prev <span class="operator">+</span> num, num)</span><br><span class="line">            ans <span class="operator">=</span> <span class="built_in">max</span>(ans, prev)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="56">合并区间</h1>
+
+<p>LeetCode 56. 合并区间<br></p>
+<h2 id="题目-1"><a href="#题目-1" class="headerlink" title="题目"></a>题目</h2><p>以数组 <code>intervals</code> 表示若干个区间的集合，其中单个区间为 <code>intervals[i] = [starti, endi]</code> 。请你合并所有重叠的区间，并返回 一个不重叠的区间数组，该数组需恰好覆盖输入中的所有区间 。<br></p>
+<h2 id="解题思考-1"><a href="#解题思考-1" class="headerlink" title="解题思考"></a>解题思考</h2><p>首先我们要先排序数组，排序的规则时以区间 start 做递增排序。<br><br>然后判断后一个区间的 start 是否小于等于前一个区间的 end ，如果是则可以合并。<br></p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">merge</span>(<span class="keyword">_</span> <span class="params">intervals</span>: [[<span class="type">Int</span>]]) -&gt; [[<span class="type">Int</span>]] &#123;</span><br><span class="line">        <span class="keyword">var</span> sorted <span class="operator">=</span> intervals.sorted &#123; <span class="variable">$0</span>[<span class="number">0</span>] <span class="operator">&lt;</span> <span class="variable">$1</span>[<span class="number">0</span>] &#125;</span><br><span class="line">        <span class="keyword">var</span> ans <span class="operator">=</span> [[<span class="type">Int</span>]]()</span><br><span class="line">        <span class="keyword">var</span> i <span class="operator">=</span> <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span> i <span class="operator">&lt;</span> sorted.count &#123;</span><br><span class="line">            <span class="keyword">var</span> interval <span class="operator">=</span> sorted[i]</span><br><span class="line">            <span class="keyword">while</span> i <span class="operator">&lt;</span> sorted.count <span class="operator">&amp;&amp;</span> sorted[i][<span class="number">0</span>] <span class="operator">&lt;=</span> interval[<span class="number">1</span>] &#123;</span><br><span class="line">                interval[<span class="number">1</span>] <span class="operator">=</span> <span class="built_in">max</span>(interval[<span class="number">1</span>], sorted[i][<span class="number">1</span>])</span><br><span class="line">                i <span class="operator">+=</span> <span class="number">1</span></span><br><span class="line">            &#125;</span><br><span class="line">            ans.append(interval)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="189">轮转数组</h1>
+
+<p>LeetCode 189. 轮转数组<br></p>
+<h2 id="题目-2"><a href="#题目-2" class="headerlink" title="题目"></a>题目</h2><p>给定一个整数数组 nums，将数组中的元素向右轮转 k 个位置，其中 k 是非负数。<br></p>
+<h2 id="解题思考-2"><a href="#解题思考-2" class="headerlink" title="解题思考"></a>解题思考</h2><ol>
+<li>第一种解题思路<br> 最简单的，使用一个新的数组，然后根据轮转要求，将旧数组移动到新数组</li>
+<li>第二种解题思路<br> 遍历数组，将下标 i 上的元素移动到 i + k 的位置上，再把 i + k 上的元素移动到 i + k + k 上。<br><br> 在某些情况下，整个数组的元素会形成一个闭环。<br> 在某些情况下，数组中的元素会形成多个互相独立的闭环。因此你需要遍历这些闭环。比如你从下标 0 开始，移动元素 n 次后又回到了下标 0 。但是这时候数组中有些元素还没有被移动的。<br><br> 根据笔者的实验，如果数组中存在 n 个闭环，则可以将数组开头的 n 个元素作为每个闭环的开头。<br><br> 那怎么计算数组有几个闭环呢，答案就是数组的闭环数量等于数组元素个数 <code>count</code> 和轮转数 <code>k</code> 的最大公约数。<br></li>
+<li>第三种解题思路<br> 我们举个实例的例子。现在有一个数组 [1, 2, 3, 4, 5, 6, 7] ，我们要轮转 3 个位置，显而易见答案是 [5, 6, 7, 1, 2, 3, 4] 。再仔细一看，可以看到下述的变换。<br><br> $$<br> [1, 2, 3, 4, 5, 6, 7] \<br> &#x3D;&gt; [7, 6, 5, 4, 3, 2, 1] \<br> &#x3D;&gt; [5, 6, 7, 4, 3, 2, 1] \<br> &#x3D;&gt; [5, 6, 7, 1, 2, 3, 4]<br> $$<br> 其实也就是去翻转数组的某个区间</li>
+</ol>
+<h2 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>&#123;</span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">rotate</span>(<span class="keyword">_</span> <span class="params">nums</span>: <span class="keyword">inout</span> [<span class="type">Int</span>], <span class="keyword">_</span> <span class="params">k</span>: <span class="type">Int</span>) &#123;</span><br><span class="line">        <span class="keyword">let</span> count <span class="operator">=</span> nums.count</span><br><span class="line">        <span class="keyword">let</span> times <span class="operator">=</span> k <span class="operator">%</span> count</span><br><span class="line">        <span class="keyword">guard</span> times <span class="operator">&gt;</span> <span class="number">0</span> <span class="keyword">else</span> &#123; <span class="keyword">return</span> &#125;</span><br><span class="line">        <span class="keyword">let</span> origin <span class="operator">=</span> nums</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">0</span><span class="operator">..&lt;</span>count &#123;</span><br><span class="line">            nums[(i <span class="operator">+</span> times) <span class="operator">%</span> count] <span class="operator">=</span> origin[i]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">rotate_2</span>(<span class="keyword">_</span> <span class="params">nums</span>: <span class="keyword">inout</span> [<span class="type">Int</span>], <span class="keyword">_</span> <span class="params">k</span>: <span class="type">Int</span>) &#123;</span><br><span class="line">        <span class="keyword">guard</span> k <span class="operator">&gt;</span> <span class="number">0</span> <span class="keyword">else</span> &#123; <span class="keyword">return</span> &#125;</span><br><span class="line">        <span class="keyword">let</span> count <span class="operator">=</span> nums.count</span><br><span class="line">        <span class="keyword">let</span> times <span class="operator">=</span> gcd(count, k)</span><br><span class="line">        <span class="keyword">let</span> loop <span class="operator">=</span> count <span class="operator">/</span> times</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">0</span><span class="operator">..&lt;</span>times &#123;</span><br><span class="line">            <span class="keyword">var</span> prev <span class="operator">=</span> nums[i]</span><br><span class="line">            <span class="keyword">var</span> nextIndex <span class="operator">=</span> i</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="number">0</span><span class="operator">..&lt;</span>loop &#123;</span><br><span class="line">                nextIndex <span class="operator">=</span> (nextIndex <span class="operator">+</span> k) <span class="operator">%</span> count</span><br><span class="line">                <span class="built_in">swap</span>(<span class="operator">&amp;</span>prev, <span class="operator">&amp;</span>nums[nextIndex])</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">gcd</span>(<span class="keyword">_</span> <span class="params">a</span>: <span class="type">Int</span>, <span class="keyword">_</span> <span class="params">b</span>: <span class="type">Int</span>) -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> a <span class="operator">=</span> a</span><br><span class="line">        <span class="keyword">var</span> b <span class="operator">=</span> b</span><br><span class="line">        <span class="keyword">while</span> b <span class="operator">!=</span> <span class="number">0</span> &#123;</span><br><span class="line">            <span class="keyword">let</span> r <span class="operator">=</span> a <span class="operator">%</span> b</span><br><span class="line">            a <span class="operator">=</span> b</span><br><span class="line">            b <span class="operator">=</span> r</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> a</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">rotate_3</span>(<span class="keyword">_</span> <span class="params">nums</span>: <span class="keyword">inout</span> [<span class="type">Int</span>], <span class="keyword">_</span> <span class="params">k</span>: <span class="type">Int</span>) &#123;</span><br><span class="line">        <span class="keyword">let</span> count <span class="operator">=</span> nums.count</span><br><span class="line">        <span class="keyword">let</span> step <span class="operator">=</span> k <span class="operator">%</span> count</span><br><span class="line">        <span class="keyword">guard</span> step <span class="operator">&gt;</span> <span class="number">0</span> <span class="keyword">else</span> &#123; <span class="keyword">return</span> &#125;</span><br><span class="line"></span><br><span class="line">        nums.reverse()</span><br><span class="line">        nums[<span class="number">0</span><span class="operator">..&lt;</span>step].reverse()</span><br><span class="line">        nums[step<span class="operator">..&lt;</span>count].reverse()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="238">除自身以外数组的乘积</h1>
+
+<p>LeetCode 238. 除自身以外数组的乘积<br></p>
+<h2 id="题目-3"><a href="#题目-3" class="headerlink" title="题目"></a>题目</h2><p>给你一个整数数组 nums，返回 数组 answer ，其中 answer[i] 等于 nums 中除 nums[i] 之外其余各元素的乘积 。<br><br>题目数据 保证 数组 nums之中任意元素的全部前缀元素和后缀的乘积都在  32 位 整数范围内。<br><br>请 不要使用除法，且在 O(n) 时间复杂度内完成此题。<br></p>
+<h2 id="解题思考-3"><a href="#解题思考-3" class="headerlink" title="解题思考"></a>解题思考</h2><p>可以计算前缀乘积和后缀乘积，然后再计算出除自身以外数组的乘积。<br><br>一般情况下，使用两个数组分别存储前缀和后缀乘积。<br><br>可以只使用一个数组，来解决前缀乘积和后缀乘积以及最终结果的存储吗？<br></p>
+<h2 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>&#123;</span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">productExceptSelf</span>(<span class="keyword">_</span> <span class="params">nums</span>: [<span class="type">Int</span>]) -&gt; [<span class="type">Int</span>] &#123;</span><br><span class="line">        <span class="keyword">let</span> count <span class="operator">=</span> nums.count</span><br><span class="line">        <span class="keyword">var</span> product <span class="operator">=</span> <span class="number">1</span></span><br><span class="line">        <span class="keyword">var</span> ans <span class="operator">=</span> <span class="type">Array</span>(repeating: <span class="number">1</span>, count: nums.count)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">0</span><span class="operator">..&lt;</span>count &#123;</span><br><span class="line">            ans[i] <span class="operator">=</span> product</span><br><span class="line">            product <span class="operator">*=</span> nums[i]</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        product <span class="operator">=</span> <span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">stride</span>(from: count <span class="operator">-</span> <span class="number">1</span>, through: <span class="number">0</span>, by: <span class="operator">-</span><span class="number">1</span>) &#123;</span><br><span class="line">            ans[i] <span class="operator">*=</span> product</span><br><span class="line">            product <span class="operator">*=</span> nums[i]</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ans</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="41">缺失的第一个正数</h1>
+
+<p>LeetCode 41. 缺失的第一个正数<br></p>
+<h2 id="题目-4"><a href="#题目-4" class="headerlink" title="题目"></a>题目</h2><p>给你一个未排序的整数数组 nums ，请你找出其中没有出现的最小的正整数。<br><br>请你实现时间复杂度为 O(n) 并且只使用常数级别额外空间的解决方案。<br></p>
+<h2 id="解题思考-4"><a href="#解题思考-4" class="headerlink" title="解题思考"></a>解题思考</h2><p>设置一个阈值，从 0 开始。遍历数组，如果大于阈值，判断是否与阈值临近，然后临近，提升阈值。如果不是，暂时记录这个值。<br><br>比如现在有一个数组 [-1, 0, 1, 2, 4, 3, 7,9]，将阈值从 0 开始， 遍历数组，发现数据 -1 ，0 时，直接丢弃。遍历到 1，2 时，将阈值分别提升到 1，2。遍历到 4 的时候，因为这个数值大于阈值，但是又与阈值不连续，所以暂时先存储起来，我们使用 Set 结构存储。再遍历到 3 时，因为与阈值连续，所以提升阈值到 3 ，同时判断到 Set 中有跟阈值连续的 4 ，所以将 4 从 Set 中移除，然后提升阈值到 4 。以此类推…<br></p>
+<h2 id="代码-4"><a href="#代码-4" class="headerlink" title="代码"></a>代码</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">firstMissingPositive</span>(<span class="keyword">_</span> <span class="params">nums</span>: [<span class="type">Int</span>]) -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> threshold <span class="operator">=</span> <span class="number">0</span></span><br><span class="line">        <span class="keyword">var</span> <span class="keyword">set</span> <span class="operator">=</span> <span class="type">Set</span>&lt;<span class="type">Int</span>&gt;()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> num <span class="keyword">in</span> nums &#123;</span><br><span class="line">            <span class="keyword">if</span> num <span class="operator">&gt;</span> threshold &#123;</span><br><span class="line">                <span class="keyword">set</span>.insert(num)</span><br><span class="line">                <span class="keyword">while</span> <span class="keyword">set</span>.contains(threshold <span class="operator">+</span> <span class="number">1</span>) &#123;</span><br><span class="line">                    threshold <span class="operator">+=</span> <span class="number">1</span></span><br><span class="line">                    <span class="keyword">set</span>.remove(threshold)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> threshold <span class="operator">+</span> <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="拓展解法-1"><a href="#拓展解法-1" class="headerlink" title="拓展解法"></a>拓展解法</h2><p>事实上，上述解法的空间复杂度是 O(n) 。但是题目要求使用常数级别额外空间。<br><br>事实上，对于长度为 N 的数组，其缺失的第一个正数肯定在 [1…N + 1] 范围内。<br><br>然后，我们在遍历数组之时，如果发现了这个范围内的数，我们可以做标记。最后查询第一个没有出现的标记即为答案。<br><br>很明显，这个标识可以与数组绑定在一起，那我们就可以当找到数字 i 时，将下标为 i - 1 位置上的元素做个标记，因为我们只关注正数，所以我们可以使用负数来做标记。<br><br>那对于原先就存在的负数，因为这些数据是我们不关注的数据，所以我们可以一开始就将所有的负数改为 N + 1 。因为 N + 1 这个数也不会影响结果。<br><br>最后，我们就可以遍历数组，当找到第一个元素不是负数的下标 index 时，答案就是 index + 1 。<br></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">firstMissingPositive</span>(<span class="keyword">_</span> <span class="params">nums</span>: [<span class="type">Int</span>]) -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> count <span class="operator">=</span> nums.count</span><br><span class="line">        <span class="keyword">var</span> nums <span class="operator">=</span> nums</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">0</span><span class="operator">..&lt;</span>count &#123;</span><br><span class="line">            <span class="keyword">if</span> nums[i] <span class="operator">&lt;=</span> <span class="number">0</span> &#123;</span><br><span class="line">                nums[i] <span class="operator">=</span> count <span class="operator">+</span> <span class="number">1</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> num <span class="keyword">in</span> nums &#123;</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">abs</span>(num) <span class="operator">&lt;=</span> count &#123;</span><br><span class="line">                nums[<span class="built_in">abs</span>(num) <span class="operator">-</span> <span class="number">1</span>] <span class="operator">=</span> <span class="operator">-</span><span class="built_in">abs</span>(nums[<span class="built_in">abs</span>(num) <span class="operator">-</span> <span class="number">1</span>])</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">0</span><span class="operator">..&lt;</span>count &#123;</span><br><span class="line">            <span class="keyword">if</span> nums[i] <span class="operator">&gt;</span> <span class="number">0</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> i <span class="operator">+</span> <span class="number">1</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> count <span class="operator">+</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://illusorycat.github.io/2024/06/04/Swift-Algorithm-5-Array/" data-id="clx18nszk0000ebqedivd99n9" data-title="Swift 算法-5-数组" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Swift-Algorithm-4-Substring" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2024/05/30/Swift-Algorithm-4-Substring/" class="article-date">
@@ -1016,66 +1102,6 @@ msys2_shell.cmd
 
 
   
-    <article id="post-Build-gallery-with-PicGo" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/05/20/Build-gallery-with-PicGo/" class="article-date">
-  <time class="dt-published" datetime="2024-05-20T01:10:55.000Z" itemprop="datePublished">2024-05-20</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/05/20/Build-gallery-with-PicGo/">使用 PicGo 搭建图床</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><p><a href="#1">前言</a><br><a href="#2">图床</a><br><a href="#3">搭建图床</a></p>
-<h1 id="1">前言</h1>
-
-<p>本教程用于记录笔者使用 <strong>PicGo</strong> 工具创建图床的过程。<br></p>
-<h1 id="2">图床</h1>
-
-<p>图床其实就是在互联网上存储图片的一块空间，你可以把它理解为一个在线数据库，其中的数据是图片。我们可以通过一个 URL 访问图床中的图片。<br></p>
-<h3 id="图床工具"><a href="#图床工具" class="headerlink" title="图床工具"></a>图床工具</h3><p>图床工具主要是方便人们创建搭建图床，比如笔者使用的图床工具是 <a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/PicGo">PicGo</a> 。<br><br>PicGo 支持多个图床服务，比如七牛图床、腾讯云、Github 等。笔者选用的是 Github 。<br></p>
-<h1 id="3">搭建图床</h1>
-
-<h3 id="Github-仓库"><a href="#Github-仓库" class="headerlink" title="Github 仓库"></a>Github 仓库</h3><p>首先我们要在 Github 上创建一个图床仓库。<br><br>在 <a target="_blank" rel="noopener" href="https://github.com/">Github</a> 上登陆自己的账户。然后点击右上角的加号( <code>+</code> )创建一个新的仓库，如下:<br><br><img src="https://github.com/illusorycat/MyPictureBase/blob/main/image/202403201009405.png?raw=true"><br><br>在 Repository name * 输入框中填写图床的名称，比如笔者使用的是 <strong>MyPictureBase</strong> 。仓库权限选择 Public 。下面的 <strong>Add a README file</strong> 是可选项，选择了 Github 就会根据你的仓库描述自动生成一个 README 文件。然后点击 <strong>Create repository</strong> 按键创建仓库即可。<br><br><img src="https://github.com/illusorycat/MyPictureBase/blob/main/image/202403201011304.png?raw=true"><br></p>
-<h4 id="创建私人-Token"><a href="#创建私人-Token" class="headerlink" title="创建私人 Token"></a>创建私人 Token</h4><p>点击右上角的头像，选择 “Settings” 进入设置页。然后在侧边栏找到 “Developer settings” 进入开发者设置页。最后选择创建私人 Token(classic) 。<br><br><img src="https://raw.githubusercontent.com/illusorycat/MyPictureBase/main/image/202403201411328.png"><br><br>设置 Token 的过期时间时可以尽可能的延长它或者直接选择不过期。勾选下面的 “repo” 项。最后点击最下方的 “Generate Token” 按键即可。<br><br><img src="https://raw.githubusercontent.com/illusorycat/MyPictureBase/main/image/202403201413750.png"><br><br>然后你就可以看到你生成的私人 Token ，请确保不要让其他人知晓它，在离开这个界面之前复制并保存它，否则你将找不到它。<br><br><img src="https://raw.githubusercontent.com/illusorycat/MyPictureBase/main/image/202403201416467.png"><br></p>
-<h3 id="PicGo-工具安装使用"><a href="#PicGo-工具安装使用" class="headerlink" title="PicGo 工具安装使用"></a>PicGo 工具安装使用</h3><p>PicGo 工具笔者是直接在 Github 上下载作者生成的 release 文件，具体下载链接可<a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/PicGo/releases">点击这儿</a>。<br><br>笔者选用的是最新的稳定版本 2.3.1 正式版，同时笔者是在 MacOS 平台下使用的，所以下载了 PicGo-2.3.1-arm64.dmg 。<br></p>
-<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>下载之后直接双击打开就可以看到 PicGo 软件的可执行文件，将其拽拖到应用文件目录即可。<br><br>但是，由于苹果的安全验证机制，并且 PicGo 并没有执行苹果要求的签证机制，因此我们一开始是无法打开的。<br><br><img src="https://github.com/illusorycat/MyPictureBase/blob/main/image/202403201028811.png?raw=true"><br><br>从 PicGo 作者提供的 <a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/PicGo/blob/dev/FAQ.md">FAQ</a> 中我们可以找到此问题的解决方案。<br><br>打开终端并执行下述指令:<br></p>
-<ol>
-<li>临时禁用系统完整性保护<br> <code>sudo spctl --master-disable</code></li>
-<li>手动放行 PicGo<br> <code>xattr -cr /Applications/PicGo.app</code></li>
-</ol>
-<p>禁用系统完整性保护后，我们可以在系统设置中的隐私和安全中看到。<br><br><img src="https://github.com/illusorycat/MyPictureBase/blob/main/image/202403201036870.png?raw=true"><br></p>
-<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><p>PicGo 软件打开后会最小化到 MacOS 系统右上角。点击右上角图标 <img src="https://github.com/illusorycat/MyPictureBase/blob/main/image/202403201150958.png?raw=true" style="width:30px; height:auto;"></img> 打开软件，软件主界面如下。<br><br><img src="https://github.com/illusorycat/MyPictureBase/blob/main/image/202403201159299.png?raw=true"><br><br>点击图床设置，选择 Github ，填写相应的信息并确认设置。<br><br><img src="https://github.com/illusorycat/MyPictureBase/blob/main/image/202403201354641.png?raw=true"><br><br>仓库名称一般是<code>Github用户名/仓库名</code>，比如笔者是 <code>illusorycat/MyPictureBase</code>。<br><br>分支名显而易见，比如笔者是 <code>main</code>。<br>Token 是在 GitHub 上创建的私人 token 。<br><br>存储路径可不填。<br><br>自定义域名也可不填。<br><br>确认上述信息并将 Github 设置为默认图床即可开始上传了。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://illusorycat.github.io/2024/05/20/Build-gallery-with-PicGo/" data-id="clwpulpzx00026wqe4zqh5tfo" data-title="使用 PicGo 搭建图床" class="article-share-link"><span class="fa fa-share">分享</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
@@ -1113,7 +1139,7 @@ msys2_shell.cmd
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">五月 2024</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">六月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">五月 2024</a></li></ul>
     </div>
   </div>
 
@@ -1124,6 +1150,10 @@ msys2_shell.cmd
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2024/06/04/Swift-Algorithm-5-Array/">Swift 算法-5-数组</a>
+          </li>
         
           <li>
             <a href="/2024/05/30/Swift-Algorithm-4-Substring/">Swift 算法-4-子串</a>
@@ -1139,10 +1169,6 @@ msys2_shell.cmd
         
           <li>
             <a href="/2024/05/23/Swift-Algorithm-1-Hash/">Swift 算法-1-哈希</a>
-          </li>
-        
-          <li>
-            <a href="/2024/05/20/Start-with-Flutter-%E2%85%A0/">Flutter 入门指引 Ⅰ</a>
           </li>
         
       </ul>
